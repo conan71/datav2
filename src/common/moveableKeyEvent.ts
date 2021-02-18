@@ -1,6 +1,6 @@
 import { useKeyPress, useThrottleFn } from 'ahooks'
 let requester: any = undefined
-const keyboardEvent = (moveableRef: any, targets: any[]) => {
+const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
   useKeyPress(
     'up',
     (e) => {
@@ -123,4 +123,4 @@ const keyboardEvent = (moveableRef: any, targets: any[]) => {
     }
   )
 }
-export default keyboardEvent
+export default useKeyboardEvent
