@@ -20,7 +20,8 @@ module.exports = override(
     noIeCompat: true,
     javascriptEnabled: true,
     modifyVars: {
-      '@primary-color': '#1DA57A', // for example, you use Ant Design to change theme color.
+      '@border-color-base': '#6c737b',
+      '@primary-color': '#6c737b', // for example, you use Ant Design to change theme color.
     },
     // modifyVars: aliyunTheme,
     cssLoaderOptions: {}, // .less file used css-loader option, not all CSS file.

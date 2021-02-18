@@ -32,6 +32,8 @@ interface props {
     height: number
     width: number
   }
+  backgroundColor: any | string
+  backgroundImage: string
 }
 
 export interface cRef {
@@ -137,7 +139,7 @@ const modelRotateBox = {
 const MENU_ID = 'menu-id'
 const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const { scale } = useMappedState(mapState)
-  const { frame, size, setFrame } = map
+  const { frame, size, setFrame, backgroundColor, backgroundImage } = map
   const [targets, setTargets] = useState<any>([])
   const [elementGuidelines, setElementGuidelines] = useState<any>([])
   const [modelBtn] = useState(true)
@@ -257,7 +259,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     }
   }
   useImperativeHandle(childRef, () => ({
-    // changeVal 就是暴露给父组件的方法
+    // 暴露给父组件的方法
     handleDelete: (e: any) => {
       handleDelete(e)
     },
@@ -492,6 +494,16 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
 
       <div
         className={styles.loop}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundColor: `${
+            typeof backgroundColor == 'string'
+              ? backgroundColor
+              : `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, ${backgroundColor.a})`
+          }`,
+
+          backgroundSize: 'auto 100%',
+        }}
         id="modelList"
         onClick={handleOnClick}
         onContextMenu={handleOnClick}

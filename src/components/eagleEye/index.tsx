@@ -146,7 +146,6 @@ const EagleEye = (props: props) => {
   }, [])
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d')
-    console.log('drawReact>>>>>>')
     if (ctx) {
       ctx.clearRect(0, 0, w, h)
       ctx.fillStyle = '#000'

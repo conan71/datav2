@@ -18,6 +18,13 @@ const createBox = (index: number) => {
 
 const Home = ({ history }: any) => {
   const [box, setBox] = useState({})
+  const [screenName, setScreenName] = useState('新建大屏')
+  const [backgroundImage, setBackgroundImage] = useState('')
+  const [backgroundColor, setBackgroundColor] = useState('#171c28')
+  const [size, setSize] = useState({
+    width: 1920,
+    height: 1080,
+  })
   const changeBox = (fields, value) => {
     let obj = {}
     let newbox
@@ -49,6 +56,31 @@ const Home = ({ history }: any) => {
     }
     setBox(newbox)
   }
+  const changeScreen = (fields, value) => {
+    switch (fields) {
+      case 'name':
+        setScreenName(value)
+        break
+      case 'bgImg':
+        setBackgroundImage(value)
+        break
+      case 'bgColor':
+        setBackgroundColor(value)
+        break
+      case 'height':
+        setSize({
+          ...size,
+          height: value,
+        })
+        break
+      case 'width':
+        setSize({
+          ...size,
+          width: value,
+        })
+        break
+    }
+  }
   // useEffect(() => {
   // const defBox = createBox(0)
   // setBox({ [defBox.id]: defBox })
@@ -60,11 +92,27 @@ const Home = ({ history }: any) => {
         <Menus />
       </div>
       <div id="container" className={styles.container}>
-        <View box={box} setBox={setBox} changeBox={changeBox} />
+        <View
+          box={box}
+          size={size}
+          backgroundImage={backgroundImage}
+          backgroundColor={backgroundColor}
+          setBox={setBox}
+          changeBox={changeBox}
+        />
       </div>
       <div className={styles.attr}>
-        <Button type="primary">Button</Button>
-        {/* <Config /> */}
+        {/* <Button type="primary">Button</Button> */}
+        <Config
+          screenName={screenName}
+          backgroundImage={backgroundImage}
+          backgroundColor={backgroundColor}
+          box={box}
+          size={size}
+          changeScreen={changeScreen}
+          setBox={setBox}
+          changeBox={changeBox}
+        />
       </div>
     </>
   )

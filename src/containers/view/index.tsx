@@ -31,15 +31,21 @@ const mapState = (state: Screen) => ({
 })
 interface props {
   box: Object
+  backgroundColor: any | string
+  backgroundImage: string
+  size: any
   setBox: Function
   changeBox: Function
 }
 const View = (props: props) => {
-  const size = {
-    width: 1920,
-    height: 1080,
-  }
-  const { box, setBox, changeBox } = props
+  const {
+    box,
+    size,
+    setBox,
+    backgroundColor,
+    backgroundImage,
+    changeBox,
+  } = props
   const { scale } = useMappedState(mapState)
   const view = useRef<HTMLDivElement | null>(null)
   const childRef = useRef<cRef>(null)
@@ -138,6 +144,8 @@ const View = (props: props) => {
             <Drop frame={box} setFrame={setBox}>
               <MoveableBox
                 ref={childRef}
+                backgroundColor={backgroundColor}
+                backgroundImage={backgroundImage}
                 size={size}
                 frame={box}
                 setFrame={changeBox}
