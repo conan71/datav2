@@ -130,7 +130,7 @@ const EagleEye = (props: props) => {
       bodyHeight: view.offsetHeight,
     })
     view.addEventListener('scroll', () => {
-      if (move.canMove == false) {
+      if (move.canMove === false) {
         setScroll({
           x: view.scrollLeft * scalew,
           y: view.scrollTop * scalew,

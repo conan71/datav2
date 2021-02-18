@@ -497,7 +497,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundColor: `${
-            typeof backgroundColor == 'string'
+            typeof backgroundColor === 'string'
               ? backgroundColor
               : `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, ${backgroundColor.a})`
           }`,

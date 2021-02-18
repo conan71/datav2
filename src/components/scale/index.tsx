@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from '@less/scale.module.less'
 const Scale = ({ start, type, max }) => {
-  let m = max - start == 200 ? true : false
+  let m = max - start === 200 ? true : false
   if (type === 'transverse') {
     return (
       <div

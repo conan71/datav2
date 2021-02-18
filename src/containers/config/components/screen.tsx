@@ -85,7 +85,7 @@ const Screen = (props: Props) => {
                 className={styles.color}
                 style={{
                   background: `${
-                    typeof selfColor == 'string'
+                    typeof selfColor === 'string'
                       ? selfColor
                       : `rgba(${selfColor.r}, ${selfColor.g}, ${selfColor.b}, ${selfColor.a})`
                   }`,

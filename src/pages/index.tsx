@@ -31,7 +31,7 @@ const Home = ({ history }: any) => {
     if (!fields || !value) {
       return
     }
-    if (typeof fields === 'string' && fields.indexOf('-') == -1) {
+    if (typeof fields === 'string' && fields.indexOf('-') === -1) {
       newbox = value
     } else {
       const getObjByField = (field, val) => {

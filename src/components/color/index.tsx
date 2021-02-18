@@ -22,7 +22,7 @@ const Color = (props: Props) => {
   }
   const handleChange = (color) => {
     setSelfColor(color.rgb)
-    // if (typeof change == 'function') {
+    // if (typeof change === 'function') {
     //   change(color)
     // }
   }
