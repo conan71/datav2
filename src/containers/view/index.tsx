@@ -91,7 +91,8 @@ const View = (props: props) => {
           style={{
             transform: `translateX(-${scroll.left}px) scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
-            width: size.width + RULER + PAGE_MARGIN.left + 'px',
+            width:
+              size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
             paddingLeft: RULER + PAGE_MARGIN.left + 'px',
           }}
         >
@@ -102,7 +103,8 @@ const View = (props: props) => {
           style={{
             transform: `translateY(-${scroll.top}px) scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
-            height: size.height + RULER + PAGE_MARGIN.top + 'px',
+            height:
+              size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
             paddingTop: RULER + PAGE_MARGIN.top + 'px',
           }}
         >
@@ -182,6 +184,7 @@ const View = (props: props) => {
           }
         }}
       />
+      <div className={styles.editSlider}></div>
     </>
   )
 }

@@ -3,15 +3,9 @@ import update, { extend } from 'immutability-helper'
 import Menus from '@containers/menus'
 import Config from '@containers/config'
 import View from '@containers/view'
+import { Button } from 'antd'
 import styles from '@less/index.module.less'
 
-extend('$ke', function (obj: any, original: any) {
-  let newOriginal = JSON.parse(JSON.stringify(original))
-  newOriginal.drag = { w: obj.width, h: obj.height }
-  newOriginal.position = { x: obj.left, y: obj.top }
-  newOriginal.rotate = obj.obj
-  return newOriginal
-})
 const createBox = (index: number) => {
   return {
     id: 'box_' + index,
@@ -23,7 +17,6 @@ const createBox = (index: number) => {
 }
 
 const Home = ({ history }: any) => {
-  const [active, setActive] = useState('')
   const [box, setBox] = useState({})
   const changeBox = (fields, value) => {
     let obj = {}
@@ -56,11 +49,10 @@ const Home = ({ history }: any) => {
     }
     setBox(newbox)
   }
-  useEffect(() => {
-    const defBox = createBox(0)
-    setActive(defBox.id)
-    setBox({ [defBox.id]: defBox })
-  }, [])
+  // useEffect(() => {
+  // const defBox = createBox(0)
+  // setBox({ [defBox.id]: defBox })
+  // }, [])
 
   return (
     <>
@@ -71,7 +63,8 @@ const Home = ({ history }: any) => {
         <View box={box} setBox={setBox} changeBox={changeBox} />
       </div>
       <div className={styles.attr}>
-        <Config />
+        <Button type="primary">Button</Button>
+        {/* <Config /> */}
       </div>
     </>
   )

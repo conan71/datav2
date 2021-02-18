@@ -500,9 +500,14 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
           return (
             <div
               key={item.id}
-              data-target="dtarget"
               id={item.id}
-              className={`${styles.model} modelItem`}
+              className={`${styles.model} ${
+                targets.find((target) => {
+                  return target.id === item.id
+                }) != undefined
+                  ? styles.select
+                  : ''
+              } modelItem`}
               style={{
                 width: `${item.drag.w}px`,
                 height: `${item.drag.h}px`,

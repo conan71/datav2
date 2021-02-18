@@ -26,32 +26,8 @@ const mapState = (state: Screen) => ({
 })
 export const Drop = ({ children, frame, setFrame }: Drop) => {
   const { isDrag, scale } = useMappedState(mapState)
-
-  // const dbody = dropBody?.current || {
-  //   offsetLeft: 0,
-  //   offsetTop: 0,
-  //   offsetHeight: 0,
-  //   offsetWidth: 0,
-  //   scrollLeft: 0,
-  //   scrollTop: 0,
-  // }
-  // const body = ref?.current || {
-  //   offsetLeft: 0,
-  //   offsetTop: 0,
-  //   offsetHeight: 0,
-  //   offsetWidth: 0,
-  // }
-  // setContentXY({
-  //   left: dbody.offsetLeft,
-  //   top: dbody.offsetTop,
-  //   bodyLeft: body.offsetLeft,
-  //   bodyTop: body.offsetTop,
-  //   bodyHeight: body.offsetHeight,
-  //   bodyWidth: body.offsetWidth,
-  //   height: dbody.offsetHeight,
-  //   width: dbody.offsetWidth,
-  // })
   const view: any = document.getElementById('view')
+  const modelList: any = document.getElementById('modelList')
   const dbody: any = document.getElementById('dropBody')
   const body: any = document.getElementById('container')
   const contentXY = {
@@ -82,7 +58,8 @@ export const Drop = ({ children, frame, setFrame }: Drop) => {
     },
     onDom: (content: any, e: any) => {
       const data = frame[content.name]
-      const id = uuidv4().split('-')[1]
+      const id = 'box_' + (modelList.children.length - 0 + 1)
+
       let width = data?.width || w,
         height = data?.height || h
       const key = uuidv4()

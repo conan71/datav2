@@ -77,7 +77,6 @@ const EagleEye = (props: props) => {
 
   const downHandler = (ev: MouseEvent) => {
     move.canMove = true
-    console.log(move.canMove)
     move.self = {
       left: ev.offsetX,
       top: ev.offsetY,
@@ -147,6 +146,7 @@ const EagleEye = (props: props) => {
   }, [])
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d')
+    console.log('drawReact>>>>>>')
     if (ctx) {
       ctx.clearRect(0, 0, w, h)
       ctx.fillStyle = '#000'
@@ -165,6 +165,8 @@ const EagleEye = (props: props) => {
       })
     }
   }, [Object.values(newFrameMap)])
+  const selectw = Math.floor(visiblew - 4) > w ? w : Math.floor(visiblew - 4)
+  const selecth = Math.floor(visibleh - 4) > h ? h : Math.floor(visibleh - 4)
   return (
     <div className={styles.thumbnail}>
       <div className={styles.eagleEye}>
@@ -176,8 +178,8 @@ const EagleEye = (props: props) => {
           ref={select}
           className={styles.select}
           style={{
-            width: Math.floor(visiblew - 4),
-            height: Math.floor(visibleh - 4),
+            width: selectw,
+            height: selecth,
             top: Math.floor(scroll.y),
             left: Math.floor(scroll.x),
           }}
