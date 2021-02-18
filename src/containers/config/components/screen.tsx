@@ -96,6 +96,10 @@ const Screen = (props: Props) => {
         </Form.Item>
         <Form.Item label="背景图">
           <ImageBox
+            imgData={{
+              url: backgroundImage,
+              opacity: 1,
+            }}
             upImage={(val) => {
               changeScreen('bgImg', val)
             }}
