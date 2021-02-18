@@ -1,10 +1,12 @@
 import { useKeyPress, useThrottleFn } from 'ahooks'
-const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
+let requester: any = undefined
+const keyboardEvent = (moveableRef: any, targets: any[]) => {
   useKeyPress(
     'up',
     (e) => {
       if (targets.length > 0) {
         e.preventDefault()
+        requester = moveableRef.current.moveable.request('draggable')
         run('y', -1)
       }
     },
@@ -29,6 +31,7 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
     (e) => {
       if (targets.length > 0) {
         e.preventDefault()
+        requester = moveableRef.current.moveable.request('draggable')
         run('y', 1)
       }
     },
@@ -41,6 +44,7 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
     (e) => {
       if (targets.length > 0) {
         e.preventDefault()
+
         run('end')
       }
     },
@@ -54,6 +58,7 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
     (e) => {
       if (targets.length > 0) {
         e.preventDefault()
+        requester = moveableRef.current.moveable.request('draggable')
         run('x', -1)
       }
     },
@@ -78,6 +83,7 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
     (e) => {
       if (targets.length > 0) {
         e.preventDefault()
+        requester = moveableRef.current.moveable.request('draggable')
         run('x', 1)
       }
     },
@@ -100,7 +106,6 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
 
   const { run } = useThrottleFn(
     (delta, val?) => {
-      const requester = moveableRef.current.moveable.request('draggable')
       switch (delta) {
         case 'x':
           requester.request({ deltaX: val })
@@ -118,4 +123,4 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
     }
   )
 }
-export default useKeyboardEvent
+export default keyboardEvent

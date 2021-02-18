@@ -22,7 +22,7 @@ import { useMappedState } from 'redux-react-hook'
 import { useKeyPress, useThrottleFn } from 'ahooks'
 import { Screen } from '@redux/Stores'
 import EagleEye from '@components/eagleEye'
-import useKeyboardEvent from '@common/moveableKeyEvent'
+import keyboardEvent from '@common/moveableKeyEvent'
 import 'react-contexify/dist/ReactContexify.css'
 import styles from '@less/box.module.less'
 interface props {
@@ -149,7 +149,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
 
   const moveableRef = useRef<any>(null)
   const selectoRef = useRef<any>()
-  useKeyboardEvent(moveableRef, targets)
+  keyboardEvent(moveableRef, targets)
   const frameMap = useMemo(() => {
     return JSON.parse(JSON.stringify(frame))
   }, [Object.keys(frame).length])
