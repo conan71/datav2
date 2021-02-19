@@ -21,6 +21,8 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: {
       '@border-color-base': '#6c737b',
+      '@collapse-header-arrow-left': '6px',
+      '@collapse-header-padding-extra': '26px',
       '@primary-color': '#6c737b', // for example, you use Ant Design to change theme color.
     },
     // modifyVars: aliyunTheme,

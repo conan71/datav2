@@ -6,7 +6,6 @@ const style: React.CSSProperties = {
   cursor: 'move',
   width: '100%',
   height: '100%',
-  background: 'blue',
   borderRadius: '4px',
 }
 

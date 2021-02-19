@@ -4287,6 +4287,14 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+echarts@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.npm.taobao.org/echarts/download/echarts-5.0.2.tgz?cache=0&sync_timestamp=1612592682359&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fecharts%2Fdownload%2Fecharts-5.0.2.tgz#1726d17a57cf05d62cd0567b4325e1201a56baf6"
+  integrity sha1-FybRelfPBdYs0FZ7QyXhIBpWuvY=
+  dependencies:
+    tslib "2.0.3"
+    zrender "5.0.4"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -11387,6 +11395,11 @@ ts-pnp@^1.1.6:
   resolved "https://registry.npm.taobao.org/ts-pnp/download/ts-pnp-1.2.0.tgz?cache=0&sync_timestamp=1585245674012&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fts-pnp%2Fdownload%2Fts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha1-pQCtCEsHmPHDBxrzkeZZEshrypI=
 
+tslib@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha1-jgdBrEX8DCJuWKF7/D5kubxsphw=
+
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
@@ -12233,3 +12246,10 @@ yargs@^13.3.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
+
+zrender@5.0.4:
+  version "5.0.4"
+  resolved "https://registry.npm.taobao.org/zrender/download/zrender-5.0.4.tgz#89c355af908b9f64a301b38f751b7951f2c8a95a"
+  integrity sha1-icNVr5CLn2SjAbOPdRt5UfLIqVo=
+  dependencies:
+    tslib "2.0.3"
