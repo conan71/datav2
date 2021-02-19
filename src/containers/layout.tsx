@@ -4,7 +4,7 @@ import { StoreContext } from 'redux-react-hook'
 import { makeStore } from '@redux/Stores'
 
 import Home from '@pages/index'
-import Header from './components/Header'
+import Header from './Header'
 import styles from '@less/layout.module.less'
 const store = makeStore()
 const Layout = () => {

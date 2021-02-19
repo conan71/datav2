@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import update, { extend } from 'immutability-helper'
-import Menus from '@containers/menus'
+import Menus from '@containers/menu'
 import Config from '@containers/config'
 import View from '@containers/view'
 import { Button } from 'antd'
