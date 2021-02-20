@@ -3,18 +3,8 @@ import update, { extend } from 'immutability-helper'
 import Menus from '@containers/menu'
 import Config from '@containers/config'
 import View from '@containers/view'
-import { Button } from 'antd'
+import PageContext from '@/context'
 import styles from '@less/index.module.less'
-
-const createBox = (index: number) => {
-  return {
-    id: 'box_' + index,
-    drag: { w: 100, h: 100 },
-    position: { x: 330, y: 30 },
-    rotate: 0,
-    ref: null,
-  }
-}
 
 const Home = ({ history }: any) => {
   const [box, setBox] = useState({})
@@ -56,6 +46,7 @@ const Home = ({ history }: any) => {
     }
     setBox(newbox)
   }
+  console.log(box)
   const changeScreen = (fields, value) => {
     switch (fields) {
       case 'name':
@@ -81,13 +72,8 @@ const Home = ({ history }: any) => {
         break
     }
   }
-  // useEffect(() => {
-  // const defBox = createBox(0)
-  // setBox({ [defBox.id]: defBox })
-  // }, [])
-
   return (
-    <>
+    <PageContext.Provider value={{ box, changeBox }}>
       <div className={styles.menus}>
         <Menus />
       </div>
@@ -102,7 +88,6 @@ const Home = ({ history }: any) => {
         />
       </div>
       <div className={styles.attr}>
-        {/* <Button type="primary">Button</Button> */}
         <Config
           screenName={screenName}
           backgroundImage={backgroundImage}
@@ -114,7 +99,7 @@ const Home = ({ history }: any) => {
           changeBox={changeBox}
         />
       </div>
-    </>
+    </PageContext.Provider>
   )
 }
 export default Home

@@ -9,18 +9,10 @@ import React, {
 } from 'react'
 import Selecto from 'react-selecto'
 import Moveable, { MoveableManagerInterface, Renderer } from 'react-moveable'
-// import {
-//   Menu,
-//   Item,
-//   Separator,
-//   Submenu,
-//   useContextMenu,
-//   animation,
-//   theme,
-// } from 'react-contexify'
 import { useMappedState } from 'redux-react-hook'
 import { useKeyPress, useThrottleFn } from 'ahooks'
 import { Screen } from '@redux/Stores'
+import Widget from '@components/widget'
 import EagleEye from '@components/eagleEye'
 import useKeyboardEvent from '@common/moveableKeyEvent'
 import 'react-contexify/dist/ReactContexify.css'
@@ -28,6 +20,7 @@ import styles from '@less/box.module.less'
 interface props {
   frame: Object
   setFrame: Function
+  setBox: Function
   size: {
     height: number
     width: number
@@ -139,7 +132,14 @@ const modelRotateBox = {
 const MENU_ID = 'menu-id'
 const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const { scale } = useMappedState(mapState)
-  const { frame, size, setFrame, backgroundColor, backgroundImage } = map
+  const {
+    frame,
+    size,
+    setFrame,
+    setBox,
+    backgroundColor,
+    backgroundImage,
+  } = map
   const [targets, setTargets] = useState<any>([])
   const [elementGuidelines, setElementGuidelines] = useState<any>([])
   const [modelBtn] = useState(true)
@@ -251,11 +251,12 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   }, [size])
 
   const handleOnClick = (e: any) => {
-    let Target = e.target
+    const Target = e.target
     if (Target.id === 'modelList') {
       setTargets([])
     } else {
-      setTargets([Target])
+      const dom = document.getElementById(Target.dataset.id)
+      setTargets([dom])
     }
   }
   useImperativeHandle(childRef, () => ({
@@ -281,6 +282,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
       const id = item.id
       delete frameMap[id]
     })
+    setBox(frameMap)
     setTargets([])
   }
 
@@ -504,9 +506,9 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
 
           backgroundSize: 'auto 100%',
         }}
-        id="modelList"
         onClick={handleOnClick}
         onContextMenu={handleOnClick}
+        id="modelList"
       >
         {Object.values(frameMap).map((item: any, index) => {
           return (
@@ -524,9 +526,10 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
                 width: `${item.drag.w}px`,
                 height: `${item.drag.h}px`,
                 transform: `translate(${item.position.x}px, ${item.position.y}px) rotate( ${item.rotate}deg )`,
-                background: '#fff',
               }}
-            ></div>
+            >
+              <Widget id={item.id} />
+            </div>
           )
         })}
       </div>

@@ -1,13 +1,10 @@
 import React from 'react'
 import Drag from '@components/drag'
 import { Collapse } from 'antd'
-import { menu, nav } from './menu'
+import { menu, nav, ehartOption } from '@config/menu'
 import styles from '@less/menus.module.less'
 const { Panel } = Collapse
 const Menus = () => {
-  const model = {
-    name: 333,
-  }
   const getNav = () => {
     return nav.map((item, index) => {
       return (
@@ -28,8 +25,9 @@ const Menus = () => {
   }
   const getList = (list) => {
     return list.map((item, index) => {
+      const model = ehartOption[item.id]
       return (
-        <div className={styles.item}>
+        <div className={styles.item} key={index}>
           <Drag key={0} model={model}>
             <div className={styles.name}>{item.title}</div>
             <img src={item.imgPath} />

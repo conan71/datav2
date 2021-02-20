@@ -148,6 +148,7 @@ const View = (props: props) => {
                 backgroundImage={backgroundImage}
                 size={size}
                 frame={box}
+                setBox={setBox}
                 setFrame={changeBox}
               ></MoveableBox>
             </Drop>

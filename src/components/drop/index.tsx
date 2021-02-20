@@ -44,8 +44,8 @@ export const Drop = ({ children, frame, setFrame }: Drop) => {
   const scrollLeft = view?.scrollLeft || 0
   const scrollTop = view?.scrollTop || 0
 
-  let w = 100,
-    h = 100
+  let w = 540,
+    h = 300
   const [props, { isHovering }] = useDrop({
     onText: (text, e) => {
       console.log(text)
@@ -80,7 +80,7 @@ export const Drop = ({ children, frame, setFrame }: Drop) => {
           scale.y
       )
       const model = {
-        ...content,
+        option: content,
         id: id,
         key: key,
         type: content.type,
