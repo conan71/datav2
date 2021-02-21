@@ -6,7 +6,8 @@ const Scale = ({ start, type, max }) => {
     return (
       <div
         className={styles.transverse}
-        style={{ width: `${m ? '195px' : max - start + 'px'}` }}
+        style={{ width: `200px` }}
+        // style={{ width: `${m ? '200px' : max - start + 'px'}` }}
       >
         {start}
         <div className={styles.end}>{m ? start + 100 : max}</div>
@@ -16,7 +17,8 @@ const Scale = ({ start, type, max }) => {
     return (
       <div
         className={styles.portrait}
-        style={{ height: `${m ? '195px' : max - start + 'px'}` }}
+        // style={{ height: `${m ? '200px' : max - start + 'px'}` }}
+        style={{ height: `200px` }}
       >
         {start}
         <div className={styles.end}>{m ? start + 100 : max}</div>

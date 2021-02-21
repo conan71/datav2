@@ -15,22 +15,25 @@ body {
   --bg-color: #171c28;
   --ct-color: #1d2433;
   --border-color: hsla(0, 0%, 100%, 0.3);
+  --moveable-line-color: #6755dd;
+  --moveable-block-color: #a7aabb;
   color: #d7dce2;
   font-size: 12px;
 }
 .moveable-control {
-  width: 10px !important;
-  height: 10px !important;
-  margin-left: -5px !important;
-  margin-top: -5px !important;
+  background-color: var(--moveable-block-color) !important;
+  width: 6px !important;
+  height: 6px !important;
+  margin-left: -3px !important;
+  margin-top: -3px !important;
   border: 0px !important;
 }
 .moveable-rotation-control {
-  background-color: var(--moveable-color) !important;
+  background-color: var(--moveable-line-color) !important;
 }
 .moveable-button {
-  background-color: var(--moveable-color) !important;
+  background-color: var(--moveable-line-color) !important;
 }
 .moveable-dimension {
-  background-color: var(--moveable-color) !important;
+  background-color: var(--moveable-line-color) !important;
 }

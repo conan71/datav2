@@ -528,7 +528,16 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
                 transform: `translate(${item.position.x}px, ${item.position.y}px) rotate( ${item.rotate}deg )`,
               }}
             >
-              <Widget id={item.id} />
+              <Widget
+                id={item.id}
+                active={
+                  targets.find((target) => {
+                    return target.id === item.id
+                  }) != undefined
+                    ? true
+                    : false
+                }
+              />
             </div>
           )
         })}
