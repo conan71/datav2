@@ -10,9 +10,10 @@ import {
   theme,
 } from 'react-contexify'
 import Selecto from 'react-selecto'
+import Ruler from '@scena/react-ruler'
+import Guides from '@scena/react-guides'
 import { useScroll, useDebounceFn, useFullscreen } from 'ahooks'
 import { useMappedState } from 'redux-react-hook'
-import Scale from '@components/scale'
 import EagleEye from '@components/eagleEye'
 import { Screen } from '@redux/Stores'
 import { Drop } from '@components/drop'
@@ -46,29 +47,16 @@ const View = (props: props) => {
     backgroundImage,
     changeBox,
   } = props
+  const [lines, setLines] = useState<any>({
+    x: [],
+    y: [],
+  })
   const { scale } = useMappedState(mapState)
   const view = useRef<HTMLDivElement | null>(null)
   const childRef = useRef<cRef>(null)
   const dropBody = useRef<HTMLDivElement | null>(null)
   const selectoRef = useRef<any>()
   const scroll = useScroll(view)
-
-  const widthScale = () => {
-    let w: any = []
-    for (let i = 0; i <= size.width; i += 200) {
-      let max = i + 200 > size.width ? size.width : i + 200
-      w.push(<Scale key={i} start={i} type="transverse" max={max} />)
-    }
-    return w
-  }
-  const heightScale = () => {
-    let w: any = []
-    for (let i = 0; i <= size.height; i += 200) {
-      let max = i + 200 > size.height ? size.height : i + 200
-      w.push(<Scale key={i} start={i} type="portrait" max={max} />)
-    }
-    return w
-  }
 
   const handleLock = (e: any) => {
     // console.log(targets)
@@ -89,6 +77,7 @@ const View = (props: props) => {
       childRef.current.handleDelete(e)
     }
   }
+
   return (
     <>
       <div className={styles.ruler}>
@@ -97,28 +86,73 @@ const View = (props: props) => {
           style={{
             transform: `translateX(-${scroll.left}px) scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
-            // width:
-            //   size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
-            paddingLeft: RULER + PAGE_MARGIN.left + 'px',
+            width:
+              size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
+            // paddingLeft: RULER + PAGE_MARGIN.left + 'px',
           }}
         >
-          <div>{widthScale()}</div>
+          <Guides
+            negativeRuler={false}
+            textAlign={'left'}
+            mainLineSize={12}
+            shortLineSize={5}
+            longLineSize={7}
+            type="horizontal"
+            backgroundColor={'#171c28'}
+            style={{
+              display: 'block',
+              width: size.width + PAGE_MARGIN.right + 'px',
+              height: RULER + 'px',
+            }}
+            rulerStyle={{
+              left: RULER + PAGE_MARGIN.left + 'px',
+              width: '100%',
+              height: '100%',
+            }}
+            unit={100}
+            onChangeGuides={({ guides }) => {
+              setLines({ x: lines.x, y: guides })
+            }}
+          />
         </div>
         <div
           className={styles.height}
           style={{
             transform: `translateY(-${scroll.top}px) scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
-            // height:
-            //   size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
-            paddingTop: RULER + PAGE_MARGIN.top + 'px',
+            height:
+              size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
+            // paddingTop: RULER + PAGE_MARGIN.top + 'px',
           }}
         >
-          <div>{heightScale()}</div>
+          <Guides
+            negativeRuler={false}
+            textAlign={'right'}
+            mainLineSize={12}
+            shortLineSize={5}
+            longLineSize={7}
+            type="vertical"
+            backgroundColor={'#171c28'}
+            style={{
+              display: 'block',
+              height: size.height + PAGE_MARGIN.bottom + 'px',
+              width: RULER + 'px',
+            }}
+            rulerStyle={{
+              top: RULER + PAGE_MARGIN.top + 'px',
+              width: '100%',
+              height: '100%',
+            }}
+            unit={100}
+            onChangeGuides={({ guides }) => {
+              setLines({ y: lines.y, x: guides })
+            }}
+          />
         </div>
       </div>
       <div className={styles.view} id="view" ref={view}>
         <div
+          id="scale"
           onContextMenu={displayMenu}
           className={styles.scale}
           style={{
@@ -144,6 +178,7 @@ const View = (props: props) => {
             <Drop frame={box} setFrame={setBox}>
               <MoveableBox
                 ref={childRef}
+                lines={lines}
                 backgroundColor={backgroundColor}
                 backgroundImage={backgroundImage}
                 size={size}

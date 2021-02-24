@@ -25,6 +25,10 @@ interface props {
     height: number
     width: number
   }
+  lines: {
+    x: []
+    y: []
+  }
   backgroundColor: any | string
   backgroundImage: string
 }
@@ -135,6 +139,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const {
     frame,
     size,
+    lines,
     setFrame,
     setBox,
     backgroundColor,
@@ -236,8 +241,9 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     setFrame(frameMap)
   }, [Object.values(frameMap)])
   useEffect(() => {
-    let vlines: number[] = [],
-      hlines: number[] = []
+    let vlines: number[] = [...lines.x],
+      hlines: number[] = [...lines.y]
+
     for (let i = 0; i < size.width / 100; i++) {
       vlines.push(i * 100)
     }
@@ -248,7 +254,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     hlines.push(size.height)
     setVerticalGuidelines(vlines)
     setHorizontalGuidelines(hlines)
-  }, [size])
+  }, [size, lines])
 
   const handleOnClick = (e: any) => {
     const Target = e.target
