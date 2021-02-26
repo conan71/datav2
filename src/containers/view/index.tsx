@@ -32,19 +32,23 @@ const mapState = (state: Screen) => ({
 })
 interface props {
   box: Object
+  boxOrder: Array<any>
   backgroundColor: any | string
   backgroundImage: string
   size: any
+  setBoxOrder: Function
   setBox: Function
   changeBox: Function
 }
 const View = (props: props) => {
   const {
     box,
+    boxOrder,
     size,
     setBox,
     backgroundColor,
     backgroundImage,
+    setBoxOrder,
     changeBox,
   } = props
   const [lines, setLines] = useState<any>({
@@ -52,6 +56,7 @@ const View = (props: props) => {
     y: [],
   })
   const { scale } = useMappedState(mapState)
+  const [activeBox, setActiveBox] = useState('')
   const view = useRef<HTMLDivElement | null>(null)
   const childRef = useRef<cRef>(null)
   const dropBody = useRef<HTMLDivElement | null>(null)
@@ -105,6 +110,7 @@ const View = (props: props) => {
               height: RULER + 'px',
             }}
             rulerStyle={{
+              // transform: `translateY(-${scroll.top}px) scale(${scale.x},${scale.y})`,
               left: RULER + PAGE_MARGIN.left + 'px',
               width: '100%',
               height: '100%',
@@ -139,6 +145,7 @@ const View = (props: props) => {
               width: RULER + 'px',
             }}
             rulerStyle={{
+              // transform: `translateX(-${scroll.left}px) scale(${scale.x},${scale.y})`,
               top: RULER + PAGE_MARGIN.top + 'px',
               width: '100%',
               height: '100%',
@@ -175,7 +182,12 @@ const View = (props: props) => {
               width: size.width + 'px',
             }}
           >
-            <Drop frame={box} setFrame={setBox}>
+            <Drop
+              frame={box}
+              setFrame={setBox}
+              boxOrder={boxOrder}
+              setBoxOrder={setBoxOrder}
+            >
               <MoveableBox
                 ref={childRef}
                 lines={lines}
@@ -185,6 +197,8 @@ const View = (props: props) => {
                 frame={box}
                 setBox={setBox}
                 setFrame={changeBox}
+                boxOrder={boxOrder}
+                setBoxOrder={setBoxOrder}
               ></MoveableBox>
             </Drop>
           </div>

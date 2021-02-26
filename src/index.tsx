@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
+import '@common/array'
 import './index.less'
 import * as serviceWorker from './serviceWorker'
 

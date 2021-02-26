@@ -4,6 +4,7 @@ import { useEventListener, useDebounceFn } from 'ahooks'
 import styles from './index.module.less'
 const Widget = ({ id, active }: any) => {
   const [outline, setOutLine] = useState(false)
+  const [_echarts_instance_, set_Echarts_instance_] = useState({})
   const box = useRef<HTMLDivElement | null>(null)
   const mouseoverBox = (ev: any) => {
     setOutLine(true)
@@ -23,7 +24,11 @@ const Widget = ({ id, active }: any) => {
         position: 'relative',
       }}
     >
-      <EchartBox id={id} />
+      <EchartBox
+        id={id}
+        _echarts_instance_={_echarts_instance_}
+        set_Echarts_instance_={set_Echarts_instance_}
+      />
     </div>
   )
 }

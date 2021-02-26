@@ -1,42 +1,11 @@
 import React, { useState } from 'react'
-import Drag from '@components/drag'
-import { Collapse } from 'antd'
-import { menu, nav, ehartOption } from '@config/menu'
+import Nav from './compnents/nav'
+import Assembly from './compnents/assembly'
+import Layer from './compnents/layer'
 import styles from '@less/menus.module.less'
-const { Panel } = Collapse
 const Menus = () => {
   const [show, setShow] = useState(true)
-  const getNav = () => {
-    return nav.map((item, index) => {
-      return (
-        <div className={styles.item} key={index}>
-          <i className={`iconfont ${item.icon} `}></i>
-        </div>
-      )
-    })
-  }
-  const getMenu = () => {
-    return menu.map((item, index) => {
-      return (
-        <Panel header={item.title} key={index} className="panel">
-          {getList(item.children)}
-        </Panel>
-      )
-    })
-  }
-  const getList = (list) => {
-    return list.map((item, index) => {
-      const model = ehartOption[item.id]
-      return (
-        <div className={styles.item} key={index}>
-          <Drag key={0} model={model}>
-            <div className={styles.name}>{item.title}</div>
-            <img src={item.imgPath} />
-          </Drag>
-        </div>
-      )
-    })
-  }
+  const [isModel, setIsModel] = useState(true)
   return (
     <div
       className={styles.menus}
@@ -51,12 +20,28 @@ const Menus = () => {
             setShow(!show)
           }}
         ></i>
-        {getNav()}
+        <Nav />
       </div>
-      <div className={styles.list}>
-        <Collapse accordion ghost expandIconPosition="left">
-          {getMenu()}
-        </Collapse>
+      <div className={styles.content}>
+        <div className={styles.switch}>
+          <div
+            className={isModel ? styles.active : ''}
+            onClick={(e) => {
+              setIsModel(true)
+            }}
+          >
+            组件
+          </div>
+          <div
+            className={!isModel ? styles.active : ''}
+            onClick={(e) => {
+              setIsModel(false)
+            }}
+          >
+            层级
+          </div>
+        </div>
+        <div className={styles.list}>{isModel ? <Assembly /> : <Layer />}</div>
       </div>
     </div>
   )

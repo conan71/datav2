@@ -7,15 +7,17 @@ interface Scale {
 export interface Screen {
   scale: Scale
   drag: boolean
+  targets: Array<any>
 }
+
 export type Action =
   | {
       type: 'change_drag'
       val: boolean
     }
   | {
-      type: 'change_title'
-      boo: boolean
+      type: 'change_targets'
+      targets: Array<any>
     }
 
 export const INITIAL_STATE: Screen = {
@@ -24,6 +26,7 @@ export const INITIAL_STATE: Screen = {
     x: 1,
     y: 1,
   },
+  targets: [],
 }
 export function makeStore() {
   return createStore(reducer, INITIAL_STATE)

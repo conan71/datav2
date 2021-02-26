@@ -37,6 +37,7 @@ module.exports = override(
     '@': path.resolve(__dirname, './src'),
     '@pages': path.resolve(__dirname, './src/pages'),
     '@config': path.resolve(__dirname, './src/config'),
+    '@context': path.resolve(__dirname, './src/context'),
     '@assets': path.resolve(__dirname, './src/assets'),
     '@image': path.resolve(__dirname, './src/assets/image'),
     '@less': path.resolve(__dirname, './src/assets/less'),

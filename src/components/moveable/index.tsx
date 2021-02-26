@@ -7,19 +7,19 @@ import React, {
   forwardRef,
   ForwardRefRenderFunction,
 } from 'react'
-import Selecto from 'react-selecto'
 import Moveable, { MoveableManagerInterface, Renderer } from 'react-moveable'
 import { useMappedState } from 'redux-react-hook'
-import { useKeyPress, useThrottleFn } from 'ahooks'
 import { Screen } from '@redux/Stores'
 import Widget from '@components/widget'
-import EagleEye from '@components/eagleEye'
 import useKeyboardEvent from '@common/moveableKeyEvent'
+import { useDispatch } from 'redux-react-hook'
 import 'react-contexify/dist/ReactContexify.css'
 import styles from '@less/box.module.less'
 interface props {
   frame: Object
+  boxOrder: Array<any>
   setFrame: Function
+  setBoxOrder: Function
   setBox: Function
   size: {
     height: number
@@ -140,6 +140,8 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     frame,
     size,
     lines,
+    boxOrder,
+    setBoxOrder,
     setFrame,
     setBox,
     backgroundColor,
@@ -153,7 +155,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const [modelPosition, setModelPosition] = useState(false)
   const [verticalGuidelines, setVerticalGuidelines] = useState<any>()
   const [horizontalGuidelines, setHorizontalGuidelines] = useState<any>()
-
+  const dispatch = useDispatch()
   const moveableRef = useRef<any>(null)
   const selectoRef = useRef<any>()
   useKeyboardEvent(moveableRef, targets)
@@ -256,10 +258,16 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     setHorizontalGuidelines(hlines)
   }, [size, lines])
 
+  useEffect(() => {
+    dispatch({
+      type: 'change_targets',
+      targets: targets,
+    })
+  }, [targets])
   const handleOnClick = (e: any) => {
     const Target = e.target
     if (Target.id === 'modelList') {
-      setTargets([])
+      if (targets.length > 0) setTargets([])
     } else {
       const dom = document.getElementById(Target.dataset.id)
       setTargets([dom])
@@ -270,7 +278,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     handleDelete: (e: any) => {
       handleDelete(e)
     },
-    setTargets: (data: []) => {
+    setTargets: (data: any[]) => {
       setTargets(data)
     },
     isMoveableElement: (e: any) => {
@@ -284,12 +292,43 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   }))
 
   function handleDelete(e: any) {
+    let ids: any[] = []
     targets.forEach((item: any, index: number) => {
       const id = item.id
       delete frameMap[id]
+      ids.push(id)
     })
+    const newBoxOrder = delArr(boxOrder, ids)
+    setBoxOrder(newBoxOrder)
     setBox(frameMap)
     setTargets([])
+  }
+  function FlatArr(arr) {
+    while (arr.some((t) => Array.isArray(t))) {
+      arr = [].concat.apply([], arr)
+    }
+    return arr
+  }
+
+  function delArr(arr: Array<any>, obj) {
+    const delArrItem = (item) => {
+      for (let i = 0; i < newArr.length; i++) {
+        const element = newArr[i]
+        if (Array.isArray(element)) {
+          element.$removeValue(item)
+        } else {
+          newArr.$removeValue(item)
+        }
+      }
+    }
+    let newArr = JSON.parse(JSON.stringify(arr))
+    if (obj.length > 1) {
+      //成组
+      debugger
+    } else {
+      delArrItem(obj)
+    }
+    return newArr
   }
 
   return (

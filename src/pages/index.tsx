@@ -8,6 +8,7 @@ import styles from '@less/index.module.less'
 
 const Home = ({ history }: any) => {
   const [box, setBox] = useState({})
+  const [boxOrder, setBoxOrder] = useState([])
   const [screenName, setScreenName] = useState('新建大屏')
   const [backgroundImage, setBackgroundImage] = useState('')
   const [backgroundColor, setBackgroundColor] = useState('#171c28')
@@ -46,7 +47,7 @@ const Home = ({ history }: any) => {
     }
     setBox(newbox)
   }
-  console.log(box)
+  console.log(boxOrder)
   const changeScreen = (fields, value) => {
     switch (fields) {
       case 'name':
@@ -73,18 +74,36 @@ const Home = ({ history }: any) => {
     }
   }
   return (
-    <PageContext.Provider value={{ box, changeBox }}>
+    <PageContext.Provider
+      value={{
+        box: box,
+        boxOrder,
+        screenName,
+        backgroundImage,
+        backgroundColor,
+        size,
+        setBox,
+        changeBox,
+        setBoxOrder,
+        setScreenName,
+        setBackgroundImage,
+        setBackgroundColor,
+        setSize,
+      }}
+    >
       <div className={styles.menus}>
         <Menus />
       </div>
       <div id="container" className={styles.container}>
         <View
           box={box}
+          boxOrder={boxOrder}
           size={size}
           backgroundImage={backgroundImage}
           backgroundColor={backgroundColor}
           setBox={setBox}
           changeBox={changeBox}
+          setBoxOrder={setBoxOrder}
         />
       </div>
       <div className={styles.attr}>

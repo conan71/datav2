@@ -5,6 +5,7 @@
       "@": ["./src/*"],
       "@assets/*": ["./src/assets/*"],
       "@config/*": ["./src/config/*"],
+      "@context/*": ["./src/context/*"],
       "@image/*": ["./src/assets/image/*"],
       "@less/*": ["./src/assets/less/*"],
       "@common/*": ["./src/common/*"],

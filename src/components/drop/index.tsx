@@ -16,15 +16,24 @@ interface contentXY {
 }
 interface Drop {
   children?: React.ReactNode
+  boxOrder: Array<any>
   // contentXY: contentXY
   frame: Object
+  setBoxOrder: Function
   setFrame: Function
 }
 const mapState = (state: Screen) => ({
   isDrag: state.drag,
   scale: state.scale,
 })
-export const Drop = ({ children, frame, setFrame }: Drop) => {
+let index = 1
+export const Drop = ({
+  children,
+  frame,
+  boxOrder,
+  setBoxOrder,
+  setFrame,
+}: Drop) => {
   const { isDrag, scale } = useMappedState(mapState)
   const view: any = document.getElementById('view')
   const modelList: any = document.getElementById('modelList')
@@ -58,8 +67,8 @@ export const Drop = ({ children, frame, setFrame }: Drop) => {
     },
     onDom: (content: any, e: any) => {
       const data = frame[content.name]
-      const id = 'box_' + (modelList.children.length - 0 + 1)
-
+      const id = 'box_' + index
+      index++
       let width = data?.width || w,
         height = data?.height || h
       const key = uuidv4()
@@ -83,11 +92,11 @@ export const Drop = ({ children, frame, setFrame }: Drop) => {
         option: content,
         id: id,
         key: key,
-        type: content.type,
-        name: content.name,
-        left: left,
-        top: top,
-        url: content.path,
+        // type: content.type,
+        // name: content.name,
+        // left: left,
+        // top: top,
+        // url: content.path,
         drag: {
           w: width,
           h: height,
@@ -100,8 +109,12 @@ export const Drop = ({ children, frame, setFrame }: Drop) => {
         rotate: 0,
         data: data,
       }
-      frame[id] = model
-      // setFrame(frame)
+      // frame[id] = model
+      setFrame({
+        ...frame,
+        [id]: model,
+      })
+      setBoxOrder([...boxOrder, id])
       // modelUp.add(model)
       // counterActions.setActive(id)
     },

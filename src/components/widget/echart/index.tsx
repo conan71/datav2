@@ -1,10 +1,19 @@
-import React, { useEffect, useContext, CSSProperties, Fragment } from 'react'
-import PageContext from '@/context'
+import React, {
+  useEffect,
+  useMemo,
+  useContext,
+  CSSProperties,
+  Fragment,
+} from 'react'
+import { useEventListener, useClickAway, useDebounceFn } from 'ahooks'
+import PageContext from '@context/index'
 import * as echarts from 'echarts'
-let _echarts_instance_ = {}
-const EchartBox = ({ id }) => {
-  const { box, changeBox } = useContext(PageContext)
-  const chart = box[id]
+const EchartBox = ({ id, _echarts_instance_, set_Echarts_instance_ }) => {
+  const boxId = useMemo(() => {
+    return id
+  }, [id])
+  const { box } = useContext(PageContext)
+  const chart = box[boxId]
   const style = {
     width: '100%',
     height: '100%',
@@ -17,21 +26,33 @@ const EchartBox = ({ id }) => {
     bottom: '0',
     zIndex: 10,
   }
-  useEffect(() => {
-    if (chart && chart.id) {
-      let c = document.getElementById(chart.id + '_echart')
-      if (c) {
-        if (!_echarts_instance_[id]) {
-          let myChart = echarts.init(c)
-          _echarts_instance_[id] = myChart
-          // changeBox(`${chart.id}-ref`, myChart)
-          myChart.setOption(chart.option)
-        } else {
-          let myChart = _echarts_instance_[id]
-          myChart.setOption(chart.option)
-          myChart.resize()
+  const { run } = useDebounceFn(
+    () => {
+      if (chart && chart.id) {
+        let c = document.getElementById(chart.id + '_echart')
+        if (c) {
+          if (!_echarts_instance_[boxId]) {
+            let myChart = echarts.init(c)
+            set_Echarts_instance_({
+              ..._echarts_instance_,
+              [boxId]: myChart,
+            })
+            myChart.setOption(chart.option)
+          } else {
+            let myChart = _echarts_instance_[boxId]
+            myChart.setOption(chart.option)
+            myChart.resize()
+          }
         }
       }
+    },
+    {
+      wait: 200,
+    }
+  )
+  useEffect(() => {
+    if (chart && chart.id) {
+      run()
     }
   }, [chart.drag])
   if (!chart.option || !chart.id) {

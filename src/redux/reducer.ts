@@ -15,7 +15,12 @@ export default function reducer(
         drag: action.val,
       }
     }
-
+    case 'change_targets': {
+      return {
+        ...state,
+        targets: action.targets,
+      }
+    }
     default:
       return state
   }
