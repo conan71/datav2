@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
-import { useEventListener, useDebounceFn } from 'ahooks'
+import { useEventListener, useSize } from 'ahooks'
 import styles from '@less/eagleEye.module.less'
 interface props {
   frameMap: Object
@@ -16,6 +16,7 @@ let move = {
 const EagleEye = (props: props) => {
   const { frameMap } = props
   const view: any = document.getElementById('view')
+  const resize = useSize(view)
   const [scroll, setScroll] = useState({
     x: 0,
     y: 0,
@@ -137,13 +138,8 @@ const EagleEye = (props: props) => {
         })
       }
     })
-    window.addEventListener('resize', () => {
-      setBody({
-        bodyWidth: view.offsetWidth,
-        bodyHeight: view.offsetHeight,
-      })
-    })
-  }, [])
+  }, [resize])
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d')
     if (ctx) {
