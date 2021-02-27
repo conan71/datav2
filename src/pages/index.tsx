@@ -3,7 +3,7 @@ import update, { extend } from 'immutability-helper'
 import Menus from '@containers/menu'
 import Config from '@containers/config'
 import View from '@containers/view'
-import PageContext from '@/context'
+import PageContext from '@context/index'
 import styles from '@less/index.module.less'
 
 const Home = ({ history }: any) => {
@@ -82,13 +82,13 @@ const Home = ({ history }: any) => {
         backgroundImage,
         backgroundColor,
         size,
-        setBox,
-        changeBox,
-        setBoxOrder,
-        setScreenName,
-        setBackgroundImage,
-        setBackgroundColor,
-        setSize,
+        setBox: (e) => setBox(e),
+        changeBox: (e, v) => changeBox(e, v),
+        setBoxOrder: (e) => setBoxOrder(e),
+        setScreenName: (e) => setScreenName(e),
+        setBackgroundImage: (e) => setBackgroundImage(e),
+        setBackgroundColor: (e) => setBackgroundColor(e),
+        setSize: (e) => setSize(e),
       }}
     >
       <div className={styles.menus}>
