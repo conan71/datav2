@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
 import { useEventListener } from 'ahooks'
-import Screen from './components/screen'
+import { useMappedState } from 'redux-react-hook'
+import { Screen } from '@redux/Stores'
+import ScreenConfig from './components/screen'
 import styles from '@less/config.module.less'
 interface Props {
   screenName: string
@@ -12,7 +14,11 @@ interface Props {
   changeBox: Function
   changeScreen: Function
 }
+const mapState = (state: Screen) => ({
+  active: state.active,
+})
 const Config = (props: Props) => {
+  const { active } = useMappedState(mapState)
   const [state, setState] = useState('auto')
   const [width, setWidth] = useState(-1)
   const dom = useRef<HTMLDivElement | null>(null)
@@ -37,6 +43,21 @@ const Config = (props: Props) => {
       setWidth(pw - l)
     }
   }
+  const getConfig = () => {
+    if (active.length == 0) {
+      return (
+        <ScreenConfig
+          screenName={screenName}
+          size={size}
+          backgroundColor={backgroundColor}
+          backgroundImage={backgroundImage}
+          changeScreen={changeScreen}
+        />
+      )
+    } else if (active.length == 1) {
+      console.log(active)
+    }
+  }
   useEventListener('mouseup', upHandler)
   useEventListener('mousedown', downHandler, { target: dom })
   useEventListener('mousemove', mousemoveHandler)
@@ -50,15 +71,7 @@ const Config = (props: Props) => {
         style={{ width: `${width > 300 ? width + 'px' : '300px'}` }}
       >
         <div className={styles.header}>参数设置</div>
-        <div className={styles.body}>
-          <Screen
-            screenName={screenName}
-            size={size}
-            backgroundColor={backgroundColor}
-            backgroundImage={backgroundImage}
-            changeScreen={changeScreen}
-          />
-        </div>
+        <div className={styles.body}>{getConfig()}</div>
       </div>
     </>
   )

@@ -17,14 +17,20 @@ const Widget = ({ id, active }: any) => {
         hover: ev.target.dataset.id,
       })
     }
-    setOutLine(true)
+    if (box.current) {
+      box.current.style.outline = 'solid 1px #443d75'
+    }
+    // setOutLine(true)
   }
   const mouseoutBox = (ev: any) => {
     dispatch({
       type: 'change_hover',
       hover: '',
     })
-    setOutLine(false)
+    if (box.current) {
+      box.current.style.outline = 'solid 0px #443d75'
+    }
+    // setOutLine(false)
   }
   useEventListener('mouseover', mouseoverBox, { target: box })
   useEventListener('mouseout', mouseoutBox, { target: box })
@@ -32,7 +38,6 @@ const Widget = ({ id, active }: any) => {
     <div
       ref={box}
       style={{
-        outline: `solid ${outline && !active ? 1 : 0}px #443d75`,
         width: '100%',
         height: '100%',
         position: 'relative',

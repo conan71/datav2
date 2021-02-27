@@ -17,10 +17,10 @@ const Assembly = () => {
   }
   const getList = (list) => {
     return list.map((item, index) => {
-      const model = ehartOption[item.id]
+      const option = ehartOption[item.id]
       return (
         <div className={styles.item} key={index}>
-          <Drag key={0} model={model}>
+          <Drag key={index} option={option} data={item}>
             <div className={styles.name}>{item.title}</div>
             <img src={item.imgPath} />
           </Drag>

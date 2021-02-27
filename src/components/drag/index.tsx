@@ -10,11 +10,12 @@ const style: React.CSSProperties = {
 }
 
 interface BoxProps {
-  model: Object
+  option: Object
+  data: Object
   key?: number
   children?: React.ReactNode
 }
-const Drag = ({ model, children }: BoxProps) => {
+const Drag = ({ option, data, children }: BoxProps) => {
   const dispatch = useDispatch()
   const [dragging, setDragging] = useState<string | null>(null)
   // const [isDrag, dragActions] = appStore.useModel('drag')
@@ -38,9 +39,9 @@ const Drag = ({ model, children }: BoxProps) => {
       // dragActions.update(false)
     },
   })
-  const opacity = dragging ? 1 : 1
+  const opacity = dragging ? 0.8 : 1
   return (
-    <div {...getDragProps(model)} style={{ ...style, opacity }}>
+    <div {...getDragProps({ option, data })} style={{ ...style, opacity }}>
       {children}
     </div>
   )

@@ -66,11 +66,11 @@ export const Drop = ({
       console.log(e)
     },
     onDom: (content: any, e: any) => {
-      const data = frame[content.name]
+      const { option, data } = content
       const id = 'box_' + index
       index++
-      let width = data?.width || w,
-        height = data?.height || h
+      let width = option?.width || w,
+        height = option?.height || h
       const key = uuidv4()
       let left = Math.round(
         (e.pageX -
@@ -88,15 +88,10 @@ export const Drop = ({
           (height * scale.y) / 2) /
           scale.y
       )
-      const model = {
-        option: content,
+      const nmodel = {
+        option: option,
         id: id,
         key: key,
-        // type: content.type,
-        // name: content.name,
-        // left: left,
-        // top: top,
-        // url: content.path,
         drag: {
           w: width,
           h: height,
@@ -112,7 +107,7 @@ export const Drop = ({
       // frame[id] = model
       setFrame({
         ...frame,
-        [id]: model,
+        [id]: nmodel,
       })
       setBoxOrder([...boxOrder, id])
       // modelUp.add(model)

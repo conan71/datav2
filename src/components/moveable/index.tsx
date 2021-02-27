@@ -258,9 +258,12 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   }, [size, lines])
 
   useEffect(() => {
+    const active = targets.map((item) => {
+      return frameMap[item.id]
+    })
     dispatch({
       type: 'change_active',
-      active: targets,
+      active: active,
     })
   }, [targets])
   const handleOnClick = (e: any) => {
@@ -556,7 +559,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
       >
         {
           // Object.values(frameMap).map((item: any, index) => {
-          boxOrder.map((o: any, index) => {
+          FlatArr(boxOrder).map((o: any, index) => {
             const item = frameMap[o]
             return (
               <div

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Input, InputNumber } from 'antd'
 import { SketchPicker } from 'react-color'
 import { ImageBox } from '@components/upload/image'
-import styles from './screen.module.less'
+import styles from './echart.module.less'
 type SizeType = Parameters<typeof Form>[0]['size']
 interface Props {
   screenName: string
@@ -11,7 +11,7 @@ interface Props {
   backgroundImage: string
   changeScreen: Function
 }
-const ScreenConfig = (props: Props) => {
+const Screen = (props: Props) => {
   const {
     screenName,
     size,
@@ -121,4 +121,4 @@ const ScreenConfig = (props: Props) => {
     </div>
   )
 }
-export default ScreenConfig
+export default Screen
