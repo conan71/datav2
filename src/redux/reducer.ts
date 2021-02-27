@@ -15,10 +15,16 @@ export default function reducer(
         drag: action.val,
       }
     }
-    case 'change_targets': {
+    case 'change_active': {
       return {
         ...state,
-        targets: action.targets,
+        active: action.active,
+      }
+    }
+    case 'change_hover': {
+      return {
+        ...state,
+        hover: action.hover,
       }
     }
     default:

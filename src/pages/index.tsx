@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import update, { extend } from 'immutability-helper'
+import React, { useState } from 'react'
+import update from 'immutability-helper'
 import Menus from '@containers/menu'
 import Config from '@containers/config'
 import View from '@containers/view'
@@ -47,7 +47,6 @@ const Home = ({ history }: any) => {
     }
     setBox(newbox)
   }
-  console.log(boxOrder)
   const changeScreen = (fields, value) => {
     switch (fields) {
       case 'name':

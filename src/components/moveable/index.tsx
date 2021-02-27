@@ -8,11 +8,10 @@ import React, {
   ForwardRefRenderFunction,
 } from 'react'
 import Moveable, { MoveableManagerInterface, Renderer } from 'react-moveable'
-import { useMappedState } from 'redux-react-hook'
+import { useMappedState, useDispatch } from 'redux-react-hook'
 import { Screen } from '@redux/Stores'
 import Widget from '@components/widget'
 import useKeyboardEvent from '@common/moveableKeyEvent'
-import { useDispatch } from 'redux-react-hook'
 import 'react-contexify/dist/ReactContexify.css'
 import styles from '@less/box.module.less'
 interface props {
@@ -260,8 +259,8 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
 
   useEffect(() => {
     dispatch({
-      type: 'change_targets',
-      targets: targets,
+      type: 'change_active',
+      active: targets,
     })
   }, [targets])
   const handleOnClick = (e: any) => {
@@ -555,37 +554,41 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         onContextMenu={handleOnClick}
         id="modelList"
       >
-        {Object.values(frameMap).map((item: any, index) => {
-          return (
-            <div
-              key={item.id}
-              id={item.id}
-              className={`${styles.model} ${
-                targets.find((target) => {
-                  return target.id === item.id
-                }) != undefined
-                  ? styles.select
-                  : ''
-              } modelItem`}
-              style={{
-                width: `${item.drag.w}px`,
-                height: `${item.drag.h}px`,
-                transform: `translate(${item.position.x}px, ${item.position.y}px) rotate( ${item.rotate}deg )`,
-              }}
-            >
-              <Widget
+        {
+          // Object.values(frameMap).map((item: any, index) => {
+          boxOrder.map((o: any, index) => {
+            const item = frameMap[o]
+            return (
+              <div
+                key={item.id}
                 id={item.id}
-                active={
+                className={`${styles.model} ${
                   targets.find((target) => {
                     return target.id === item.id
                   }) != undefined
-                    ? true
-                    : false
-                }
-              />
-            </div>
-          )
-        })}
+                    ? styles.select
+                    : ''
+                } modelItem`}
+                style={{
+                  width: `${item.drag.w}px`,
+                  height: `${item.drag.h}px`,
+                  transform: `translate(${item.position.x}px, ${item.position.y}px) rotate( ${item.rotate}deg )`,
+                }}
+              >
+                <Widget
+                  id={item.id}
+                  active={
+                    targets.find((target) => {
+                      return target.id === item.id
+                    }) != undefined
+                      ? true
+                      : false
+                  }
+                />
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   )

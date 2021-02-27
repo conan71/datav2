@@ -24,6 +24,7 @@
     "moveable-helper": "^0.4.0",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.8",
+    "react-beautiful-dnd": "^13.0.0",
     "react-color": "^2.19.3",
     "react-contexify": "^5.0.0",
     "react-dom": "^16.13.1",

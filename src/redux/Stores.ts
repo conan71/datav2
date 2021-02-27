@@ -7,7 +7,8 @@ interface Scale {
 export interface Screen {
   scale: Scale
   drag: boolean
-  targets: Array<any>
+  active: Array<any>
+  hover: string
 }
 
 export type Action =
@@ -16,8 +17,12 @@ export type Action =
       val: boolean
     }
   | {
-      type: 'change_targets'
-      targets: Array<any>
+      type: 'change_active'
+      active: Array<any>
+    }
+  | {
+      type: 'change_hover'
+      hover: string
     }
 
 export const INITIAL_STATE: Screen = {
@@ -26,7 +31,8 @@ export const INITIAL_STATE: Screen = {
     x: 1,
     y: 1,
   },
-  targets: [],
+  active: [],
+  hover: '',
 }
 export function makeStore() {
   return createStore(reducer, INITIAL_STATE)
