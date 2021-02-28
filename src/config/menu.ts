@@ -65,7 +65,162 @@ const ehartOption = {
     },
     series: [
       {
-        data: [120, 200, 150, 80, 70, 110, 130],
+        data: [
+          {
+            value: 100,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#EF098A', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(0,0,0,0.5)', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+          {
+            value: 230,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'red', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'blue', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+          {
+            value: 240,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'red', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'blue', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+          {
+            value: 250,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'red', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'blue', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+          {
+            value: 260,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'red', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'blue', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+          {
+            value: 360,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'red', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'blue', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+          {
+            value: 460,
+            itemStyle: {
+              color: {
+                type: 'linear', // 线性渐变
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'red', // 0%处的颜色为红色
+                  },
+                  {
+                    offset: 1,
+                    color: 'blue', // 100%处的颜色为蓝
+                  },
+                ],
+              },
+            },
+          },
+        ],
         type: 'bar',
       },
     ],

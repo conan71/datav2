@@ -32,7 +32,7 @@ const EchartBox = ({ id, _echarts_instance_, set_Echarts_instance_ }) => {
         let c = document.getElementById(chart.id + '_echart')
         if (c) {
           if (!_echarts_instance_[boxId]) {
-            let myChart = echarts.init(c, 'dark')
+            let myChart = echarts.init(c) //, 'dark'
             set_Echarts_instance_({
               ..._echarts_instance_,
               [boxId]: myChart,
