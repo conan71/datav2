@@ -1,4 +1,15 @@
-## Fusion Design Lite - TS
+## 预览
+
+<p align="center">
+  <img src="./2021-3-2.png">
+</p>
+## 项目用到的一些库
+
+> 组件移动(https://github.com/daybrush/moveable)
+
+> 组件多选(https://github.com/daybrush/selecto)
+
+> 标尺(https://github.com/daybrush/guides)
 
 > hook 库 [alibaba/hooks](https://github.com/alibaba/hooks)，
 > [官网](https://ahooks.gitee.io/zh-CN)
@@ -17,10 +28,8 @@
 
 ```bash
 # 安装依赖
-$ npm install
+$ yarn || npm install
 
 # 启动服务
-$ npm start  # visit http://localhost:3333
+$ yarn start || npm run start  # visit http://localhost:3000
 ```
-
-[More docs](https://ice.work/docs/guide/about).
