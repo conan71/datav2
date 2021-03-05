@@ -140,11 +140,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#EF098A', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'rgba(0,0,0,0.5)', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -162,11 +162,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: 'red', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'blue', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -184,11 +184,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: 'red', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'blue', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -206,11 +206,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: 'red', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'blue', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -228,11 +228,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: 'red', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'blue', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -250,11 +250,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: 'red', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'blue', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -272,11 +272,11 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: 'red', // 0%处的颜色为红色
+                    color: '#3D7EEB', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'blue', // 100%处的颜色为蓝
+                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
@@ -287,5 +287,95 @@ const ehartOption = {
       },
     ],
   },
+}
+const configData = {
+  1: [
+    {
+      name: '整体样式',
+      children: [
+        {
+          name: '字体',
+          type: 'input',
+        },
+        {
+          name: '边距',
+          children: [
+            {
+              name: '上',
+              type: 'input',
+            },
+            {
+              name: '下',
+              type: 'input',
+            },
+            {
+              name: '左',
+              type: 'input',
+            },
+            {
+              name: '右',
+              type: 'input',
+            },
+          ],
+        },
+        {
+          name: '柱子样式',
+          children: [
+            {
+              name: '宽度占比',
+              type: 'input',
+            },
+            {
+              name: '柱体间占比',
+              type: 'input',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: '数据样式',
+      children: [
+        {
+          name: '项目1',
+          children: [
+            {
+              name: '填充色',
+              type: 'color',
+            },
+            {
+              name: '边框色',
+              type: 'color',
+            },
+            {
+              name: '边框粗细',
+              type: 'input',
+            },
+          ],
+        },
+        {
+          name: '项目2',
+          children: [
+            {
+              name: '填充色',
+              type: 'color',
+            },
+            {
+              name: '边框色',
+              type: 'color',
+            },
+            {
+              name: '边框粗细',
+              type: 'input',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: '是否开启动画',
+      type: 'check',
+    },
+  ],
 }
 export { menu, nav, ehartOption }

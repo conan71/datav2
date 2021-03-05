@@ -38,7 +38,7 @@ export interface cRef {
   isMoveableElement: (e: any) => boolean
 }
 const mapState = (state: Screen) => ({
-  scale: state.scale,
+  active: state.active,
 })
 
 const modelPositionBox = {
@@ -134,7 +134,7 @@ const modelRotateBox = {
 } as const
 const MENU_ID = 'menu-id'
 const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
-  const { scale } = useMappedState(mapState)
+  const { active } = useMappedState(mapState)
   const {
     frame,
     size,
@@ -157,10 +157,10 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const dispatch = useDispatch()
   const moveableRef = useRef<any>(null)
   const selectoRef = useRef<any>()
-  useKeyboardEvent(moveableRef, targets)
+  useKeyboardEvent()
   const frameMap = useMemo(() => {
     return JSON.parse(JSON.stringify(frame))
-  }, [Object.keys(frame).length])
+  }, [frame])
   const modelBtnBox = {
     name: 'modelBtnName',
     props: {},
@@ -237,7 +237,6 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     })
     setElementGuidelines(list)
   }, [Object.keys(frameMap).length])
-
   useEffect(() => {
     setFrame(frameMap)
   }, [Object.values(frameMap)])
@@ -266,6 +265,24 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
       active: active,
     })
   }, [targets])
+  useEffect(() => {
+    if (active.length == 1) {
+      moveableRef.current.moveable.request(
+        'resizable',
+        { offsetWidth: active[0].drag.w, offsetHeight: active[0].drag.h },
+        true
+      )
+    }
+  }, [active[0]?.drag])
+  useEffect(() => {
+    if (active.length == 1) {
+      moveableRef.current.moveable.request(
+        'draggable',
+        { x: active[0].position.x, y: active[0].position.y },
+        true
+      )
+    }
+  }, [active[0]?.position])
   const handleOnClick = (e: any) => {
     const Target = e.target
     if (Target.id === 'modelList') {
@@ -293,7 +310,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     },
   }))
 
-  function handleDelete(e: any) {
+  const handleDelete = (e: any) => {
     let ids: any[] = []
     targets.forEach((item: any, index: number) => {
       const id = item.id
@@ -305,14 +322,14 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     setBox(frameMap)
     setTargets([])
   }
-  function FlatArr(arr) {
+  const FlatArr = (arr) => {
     while (arr.some((t) => Array.isArray(t))) {
       arr = [].concat.apply([], arr)
     }
     return arr
   }
 
-  function delArr(arr: Array<any>, obj) {
+  const delArr = (arr: Array<any>, obj) => {
     const delArrItem = (item) => {
       for (let i = 0; i < newArr.length; i++) {
         const element = newArr[i]
@@ -375,6 +392,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         onDragEnd={(data) => {
           const { target } = data
           const frame = frameMap[target.id]
+          console.log('drageEnd>>>>>')
           setFrame(`${target.id}-position`, frame.position)
           setModelPosition(false)
           // setModelSize(true)

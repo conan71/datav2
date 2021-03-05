@@ -35,11 +35,12 @@ const ScreenConfig = (props: Props) => {
   }
   return (
     <div className={styles.screen}>
+      <h3>属性</h3>
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         layout="horizontal"
-        size={'small' as SizeType}
+        // size={'small' as SizeType}
       >
         <Form.Item label="大屏名称">
           <Input

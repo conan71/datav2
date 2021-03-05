@@ -1,12 +1,19 @@
 import { useKeyPress, useThrottleFn } from 'ahooks'
-let requester: any = undefined
-const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
+import { useMappedState, useDispatch } from 'redux-react-hook'
+import { Screen } from '@redux/Stores'
+
+const mapState = (state: Screen) => ({
+  active: state.active,
+})
+
+const useKeyboardEvent = () => {
+  const dispatch = useDispatch()
+  const { active } = useMappedState(mapState)
   useKeyPress(
-    'up',
+    'ctrl.up',
     (e) => {
-      if (targets.length > 0) {
+      if (active.length === 1) {
         e.preventDefault()
-        requester = moveableRef.current.moveable.request('draggable')
         run('y', -1)
       }
     },
@@ -14,24 +21,12 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
       events: ['keydown'],
     }
   )
+
   useKeyPress(
-    'up',
+    'ctrl.down',
     (e) => {
-      if (targets.length > 0) {
+      if (active.length === 1) {
         e.preventDefault()
-        run('end')
-      }
-    },
-    {
-      events: ['keyup'],
-    }
-  )
-  useKeyPress(
-    'down',
-    (e) => {
-      if (targets.length > 0) {
-        e.preventDefault()
-        requester = moveableRef.current.moveable.request('draggable')
         run('y', 1)
       }
     },
@@ -39,26 +34,12 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
       events: ['keydown'],
     }
   )
-  useKeyPress(
-    'down',
-    (e) => {
-      if (targets.length > 0) {
-        e.preventDefault()
-
-        run('end')
-      }
-    },
-    {
-      events: ['keyup'],
-    }
-  )
 
   useKeyPress(
-    'left',
+    'ctrl.left',
     (e) => {
-      if (targets.length > 0) {
+      if (active.length === 1) {
         e.preventDefault()
-        requester = moveableRef.current.moveable.request('draggable')
         run('x', -1)
       }
     },
@@ -66,24 +47,12 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
       events: ['keydown'],
     }
   )
+
   useKeyPress(
-    'left',
+    'ctrl.right',
     (e) => {
-      if (targets.length > 0) {
+      if (active.length === 1) {
         e.preventDefault()
-        run('end')
-      }
-    },
-    {
-      events: ['keyup'],
-    }
-  )
-  useKeyPress(
-    'right',
-    (e) => {
-      if (targets.length > 0) {
-        e.preventDefault()
-        requester = moveableRef.current.moveable.request('draggable')
         run('x', 1)
       }
     },
@@ -91,30 +60,37 @@ const useKeyboardEvent = (moveableRef: any, targets: any[]) => {
       events: ['keydown'],
     }
   )
-  useKeyPress(
-    'right',
-    (e) => {
-      if (targets.length > 0) {
-        e.preventDefault()
-        run('end')
-      }
-    },
-    {
-      events: ['keyup'],
-    }
-  )
 
   const { run } = useThrottleFn(
     (delta, val?) => {
       switch (delta) {
         case 'x':
-          requester.request({ deltaX: val })
+          dispatch({
+            type: 'change_active',
+            active: [
+              {
+                ...active[0],
+                position: {
+                  ...active[0].position,
+                  x: active[0].position.x + val,
+                },
+              },
+            ],
+          })
           break
         case 'y':
-          requester.request({ deltaY: val })
-          break
-        case 'end':
-          requester.requestEnd()
+          dispatch({
+            type: 'change_active',
+            active: [
+              {
+                ...active[0],
+                position: {
+                  ...active[0].position,
+                  y: active[0].position.y + val,
+                },
+              },
+            ],
+          })
           break
       }
     },

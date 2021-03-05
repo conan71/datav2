@@ -3,6 +3,7 @@ import { useEventListener } from 'ahooks'
 import { useMappedState } from 'redux-react-hook'
 import { Screen } from '@redux/Stores'
 import ScreenConfig from './components/screen'
+import Widget from './components/widget'
 import styles from '@less/config.module.less'
 interface Props {
   screenName: string
@@ -55,7 +56,7 @@ const Config = (props: Props) => {
         />
       )
     } else if (active.length == 1) {
-      console.log(active)
+      return <Widget />
     }
   }
   useEventListener('mouseup', upHandler)
@@ -70,7 +71,9 @@ const Config = (props: Props) => {
         className={styles.config}
         style={{ width: `${width > 300 ? width + 'px' : '300px'}` }}
       >
-        <div className={styles.header}>参数设置</div>
+        <div className={styles.header}>
+          {active.length == 0 ? screenName : active[0].data.title}
+        </div>
         <div className={styles.body}>{getConfig()}</div>
       </div>
     </>
