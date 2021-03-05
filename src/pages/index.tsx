@@ -45,7 +45,6 @@ const Home = ({ history }: any) => {
       }
       newbox = update(box, obj)
     }
-    console.log(newbox)
     setBox(newbox)
   }
   const changeScreen = (fields, value) => {

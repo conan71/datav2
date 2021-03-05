@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Input, InputNumber } from 'antd'
 import { SketchPicker } from 'react-color'
 import { ImageBox } from '@components/upload/image'

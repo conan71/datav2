@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Drag from '@components/drag'
 import { Collapse } from 'antd'
-import { menu, nav, ehartOption } from '@config/menu'
+import { menu, ehartOption } from '@config/menu'
 import styles from './assembly.module.less'
 
 const { Panel } = Collapse

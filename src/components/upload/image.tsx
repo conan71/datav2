@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, CSSProperties } from 'react'
-import { useEventListener, useClickAway, useDebounceFn } from 'ahooks'
+import { useEventListener } from 'ahooks'
 import { useDropzone } from 'react-dropzone'
 import './image.css'
 interface imgData {
@@ -99,9 +99,6 @@ export const ImageBox = (props: props) => {
     }
   }
 
-  const getImage = () => {
-    return files
-  }
   return (
     <div {...getRootProps({ className: 'dropzone' })}>
       <input {...getInputProps()} />

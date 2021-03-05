@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { useEventListener } from 'ahooks'
 import { useMappedState } from 'redux-react-hook'
 import { Screen } from '@redux/Stores'
@@ -47,7 +47,7 @@ const Config = (props: Props) => {
     }
   }
   const getConfig = () => {
-    if (active.length == 0) {
+    if (active.length === 0) {
       return (
         <ScreenConfig
           screenName={screenName}
@@ -57,7 +57,7 @@ const Config = (props: Props) => {
           changeScreen={changeScreen}
         />
       )
-    } else if (active.length == 1) {
+    } else if (active.length === 1) {
       return <Widget />
     }
   }

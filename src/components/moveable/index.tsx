@@ -133,7 +133,6 @@ const modelRotateBox = {
     )
   },
 } as const
-const MENU_ID = 'menu-id'
 const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const { active } = useMappedState(mapState)
   const {
@@ -241,7 +240,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
 
   useEffect(() => {
     setFrame(frameMap)
-  }, [Object.values(frameMap)])
+  }, [frameMap])
 
   useEffect(() => {
     let vlines: number[] = [...lines.x],
@@ -581,7 +580,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
                 className={`${styles.model} ${
                   targets.find((target) => {
                     return target.id === item.id
-                  }) != undefined
+                  }) !== undefined
                     ? styles.select
                     : ''
                 } modelItem`}
@@ -596,7 +595,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
                   active={
                     targets.find((target) => {
                       return target.id === item.id
-                    }) != undefined
+                    }) !== undefined
                       ? true
                       : false
                   }

@@ -27,7 +27,7 @@ const getItemStyle = (isDragging, hover, id, active, draggableStyle) => ({
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: active == id ? '#2f3b54' : hover === id ? '#404b56' : '#292f35',
+  background: active === id ? '#2f3b54' : hover === id ? '#404b56' : '#292f35',
 
   // styles we need to apply on draggables
   ...draggableStyle,

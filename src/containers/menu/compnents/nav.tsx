@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { menu, nav, ehartOption } from '@config/menu'
+import React from 'react'
+import { nav } from '@config/menu'
 import styles from './nav.module.less'
 const Nav = () => {
   const getNav = () => {

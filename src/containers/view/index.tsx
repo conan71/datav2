@@ -1,18 +1,9 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import React, { useState, useRef } from 'react'
 import MoveableBox, { cRef } from '@components/moveable'
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  useContextMenu,
-  animation,
-  theme,
-} from 'react-contexify'
+import { Menu, Item, useContextMenu, animation, theme } from 'react-contexify'
 import Selecto from 'react-selecto'
-import Ruler from '@scena/react-ruler'
 import Guides from '@scena/react-guides'
-import { useScroll, useDebounceFn, useFullscreen } from 'ahooks'
+import { useScroll } from 'ahooks'
 import { useMappedState } from 'redux-react-hook'
 import EagleEye from '@components/eagleEye'
 import { Screen } from '@redux/Stores'
@@ -56,7 +47,6 @@ const View = (props: props) => {
     y: [],
   })
   const { scale } = useMappedState(mapState)
-  const [activeBox, setActiveBox] = useState('')
   const view = useRef<HTMLDivElement | null>(null)
   const childRef = useRef<cRef>(null)
   const dropBody = useRef<HTMLDivElement | null>(null)
@@ -93,7 +83,6 @@ const View = (props: props) => {
             transformOrigin: '0 0',
             width:
               size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
-            // paddingLeft: RULER + PAGE_MARGIN.left + 'px',
           }}
         >
           <Guides
@@ -110,7 +99,6 @@ const View = (props: props) => {
               height: RULER + 'px',
             }}
             rulerStyle={{
-              // transform: `translateY(-${scroll.top}px) scale(${scale.x},${scale.y})`,
               left: RULER + PAGE_MARGIN.left + 'px',
               width: '100%',
               height: '100%',
@@ -128,7 +116,6 @@ const View = (props: props) => {
             transformOrigin: '0 0',
             height:
               size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
-            // paddingTop: RULER + PAGE_MARGIN.top + 'px',
           }}
         >
           <Guides
@@ -145,7 +132,6 @@ const View = (props: props) => {
               width: RULER + 'px',
             }}
             rulerStyle={{
-              // transform: `translateX(-${scroll.left}px) scale(${scale.x},${scale.y})`,
               top: RULER + PAGE_MARGIN.top + 'px',
               width: '100%',
               height: '100%',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useMappedState, useDispatch } from 'redux-react-hook'
-import { Form, Input, InputNumber } from 'antd'
+import { useMappedState } from 'redux-react-hook'
+import { Form, InputNumber } from 'antd'
 import { Screen } from '@redux/Stores'
 import PageContext from '@context/index'
 import styles from './widget.module.less'
@@ -21,9 +21,8 @@ const Widget = () => {
       y: 0,
     },
   })
-  const dispatch = useDispatch()
+
   useEffect(() => {
-    console.log(active)
     setSelfBox(box[active[0]])
   }, [active, box[active[0]]])
   return (
@@ -70,7 +69,6 @@ const Widget = () => {
             <InputNumber
               value={selfbox.position.x}
               onChange={(e) => {
-                console.log(e)
                 changeBox(`${active[0]}-position-x`, e)
               }}
             />

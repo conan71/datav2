@@ -1,23 +1,13 @@
-import React, { useRef, useEffect, useDebugValue } from 'react'
+import React, { useRef } from 'react'
 import { useDrop } from 'ahooks'
 import { v4 as uuidv4 } from 'uuid'
 import { useMappedState } from 'redux-react-hook'
 import { Screen } from '@redux/Stores'
 import styles from '@less/drop.module.less'
-// import { dataList } from '@/config/menuConfig'
-import { AnyIfEmpty } from 'react-redux'
-interface contentXY {
-  left: number
-  top: number
-  bodyLeft: number
-  bodyTop: number
-  height: number
-  width: number
-}
+
 interface Drop {
   children?: React.ReactNode
   boxOrder: Array<any>
-  // contentXY: contentXY
   frame: Object
   setBoxOrder: Function
   setFrame: Function
@@ -36,7 +26,6 @@ export const Drop = ({
 }: Drop) => {
   const { isDrag, scale } = useMappedState(mapState)
   const view: any = document.getElementById('view')
-  const modelList: any = document.getElementById('modelList')
   const dbody: any = document.getElementById('dropBody')
   const body: any = document.getElementById('container')
   const contentXY = {
@@ -104,14 +93,11 @@ export const Drop = ({
         rotate: 0,
         data: data,
       }
-      // frame[id] = model
       setFrame({
         ...frame,
         [id]: nmodel,
       })
       setBoxOrder([...boxOrder, id])
-      // modelUp.add(model)
-      // counterActions.setActive(id)
     },
   })
   const ref = useRef<HTMLDivElement | null>(null)
