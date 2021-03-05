@@ -1,10 +1,11 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef, useMemo, useContext } from 'react'
 import { useEventListener } from 'ahooks'
 import { useMappedState } from 'redux-react-hook'
 import { Screen } from '@redux/Stores'
 import ScreenConfig from './components/screen'
 import Widget from './components/widget'
-import PageContext from '@context/index'
+import EchartConfig from './components/echart'
+// import PageContext from '@context/index'
 import styles from '@less/config.module.less'
 interface Props {
   screenName: string
@@ -21,18 +22,22 @@ const mapState = (state: Screen) => ({
 })
 const Config = (props: Props) => {
   const { active } = useMappedState(mapState)
-  const { box } = useContext(PageContext)
+  // const { box } = useContext(PageContext)
   const [state, setState] = useState('auto')
   const [width, setWidth] = useState(-1)
   const dom = useRef<HTMLDivElement | null>(null)
   const {
     screenName,
     size,
+    box,
     backgroundColor,
     backgroundImage,
     changeScreen,
   } = props
 
+  const data = useMemo(() => {
+    return box[active[0]]
+  }, [active, box])
   const upHandler = (ev: MouseEvent) => {
     setState('auto')
   }
@@ -58,7 +63,20 @@ const Config = (props: Props) => {
         />
       )
     } else if (active.length === 1) {
-      return <Widget />
+      const getChartConfig = () => {
+        switch (data.data.widget) {
+          case 'echart':
+            return <EchartConfig />
+          default:
+            return <EchartConfig />
+        }
+      }
+      return (
+        <>
+          <Widget />
+          {getChartConfig()}
+        </>
+      )
     }
   }
   useEventListener('mouseup', upHandler)
@@ -74,7 +92,11 @@ const Config = (props: Props) => {
         style={{ width: `${width > 300 ? width + 'px' : '300px'}` }}
       >
         <div className={styles.header}>
-          {active.length == 0 ? screenName : box[active[0]]?.data.title}
+          {active.length == 0
+            ? screenName
+            : active.length == 1
+            ? box[active[0]]?.data.title
+            : ''}
         </div>
         <div className={styles.body}>{getConfig()}</div>
       </div>

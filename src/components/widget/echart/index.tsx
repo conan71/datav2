@@ -54,7 +54,7 @@ const EchartBox = ({ id, _echarts_instance_, set_Echarts_instance_ }) => {
     if (chart && chart.id) {
       run()
     }
-  }, [chart.drag])
+  }, [chart.drag, chart.option])
   if (!chart.option || !chart.id) {
     return <div>图表加载失败...</div>
   }

@@ -125,6 +125,13 @@ const ehartOption = {
     yAxis: {
       type: 'value',
     },
+    grid: {
+      bottom: '8%',
+      top: '8%',
+      left: '2%',
+      right: '2%',
+      containLabel: true,
+    },
     series: [
       {
         data: [
@@ -140,7 +147,7 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(61,126,235,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
@@ -148,6 +155,9 @@ const ehartOption = {
                   },
                 ],
               },
+              borderColor: 'rgba(61,126,235,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
           {
@@ -162,14 +172,17 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(23,216,161,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
+                    color: 'rgba(23,216,161,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
+              borderColor: 'rgba(23,216,161,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
           {
@@ -184,14 +197,17 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(219,51,90,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
-                    color: 'rgba(61,126,235,0)', // 100%处的颜色为蓝
+                    color: 'rgba(219,51,90,0)', // 100%处的颜色为蓝
                   },
                 ],
               },
+              borderColor: 'rgba(219,51,90,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
           {
@@ -206,7 +222,7 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(61,126,235,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
@@ -214,6 +230,9 @@ const ehartOption = {
                   },
                 ],
               },
+              borderColor: 'rgba(61,126,235,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
           {
@@ -228,7 +247,7 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(61,126,235,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
@@ -236,6 +255,9 @@ const ehartOption = {
                   },
                 ],
               },
+              borderColor: 'rgba(61,126,235,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
           {
@@ -250,7 +272,7 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(61,126,235,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
@@ -258,6 +280,9 @@ const ehartOption = {
                   },
                 ],
               },
+              borderColor: 'rgba(61,126,235,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
           {
@@ -272,7 +297,7 @@ const ehartOption = {
                 colorStops: [
                   {
                     offset: 0,
-                    color: '#3D7EEB', // 0%处的颜色为红色
+                    color: 'rgba(61,126,235,0.8)', // 0%处的颜色为红色
                   },
                   {
                     offset: 1,
@@ -280,10 +305,14 @@ const ehartOption = {
                   },
                 ],
               },
+              borderColor: 'rgba(61,126,235,1)',
+              borderWidth: 3,
+              borderRadius: [2, 2, 2, 2],
             },
           },
         ],
         type: 'bar',
+        barWidth: '40%',
       },
     ],
   },

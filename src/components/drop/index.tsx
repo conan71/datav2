@@ -42,8 +42,8 @@ export const Drop = ({
   const scrollLeft = view?.scrollLeft || 0
   const scrollTop = view?.scrollTop || 0
 
-  let w = 540,
-    h = 300
+  let w = 400,
+    h = 240
   const [props, { isHovering }] = useDrop({
     onText: (text, e) => {
       console.log(text)

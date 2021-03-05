@@ -1,124 +1,97 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Input, InputNumber } from 'antd'
-import { SketchPicker } from 'react-color'
-import { ImageBox } from '@components/upload/image'
+import React, { useState, useEffect, useContext } from 'react'
+import { useMappedState } from 'redux-react-hook'
+import { Form, InputNumber, Input } from 'antd'
+import { Screen } from '@redux/Stores'
+import PageContext from '@context/index'
 import styles from './echart.module.less'
-type SizeType = Parameters<typeof Form>[0]['size']
-interface Props {
-  screenName: string
-  size: any
-  backgroundColor: any | string
-  backgroundImage: string
-  changeScreen: Function
-}
-const Screen = (props: Props) => {
-  const {
-    screenName,
-    size,
-    backgroundColor,
-    backgroundImage,
-    changeScreen,
-  } = props
-  const [displayColorPicker, setDisplayColorPicker] = useState(false)
-  const [selfColor, setSelfColor] = useState(backgroundColor)
-  const [top, setTop] = useState(0)
-  const handleClick = () => {
-    setDisplayColorPicker(!displayColorPicker)
-    setTop(130)
-  }
-  const handleClose = () => {
-    setDisplayColorPicker(false)
-  }
-  const handleChange = (color) => {
-    setSelfColor(color.rgb)
-    changeScreen('bgColor', color.rgb)
+const mapState = (state: Screen) => ({
+  active: state.active,
+})
+const EchartConfig = () => {
+  const { active } = useMappedState(mapState)
+  const { box, changeBox } = useContext(PageContext)
+  const [selfbox, setSelfBox] = useState<any>({})
+
+  useEffect(() => {
+    setSelfBox(box[active[0]])
+  }, [active, box[active[0]]])
+  if (active.length === 0 || JSON.stringify(selfbox) === '{}') {
+    return <></>
   }
   return (
-    <div className={styles.screen}>
+    <>
+      <h3>图表</h3>
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         layout="horizontal"
-        size={'small' as SizeType}
       >
-        <Form.Item label="大屏名称">
-          <Input
-            defaultValue={screenName}
-            onChange={(e) => {
-              changeScreen('name', e.target.value)
-            }}
-          />
-        </Form.Item>
-
-        <Form.Item label="大屏尺寸" style={{ marginBottom: 0 }}>
+        <Form.Item label="边距" style={{ marginBottom: 0 }}>
           <Form.Item
-            style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 8px)',
+              marginRight: '8px',
+            }}
           >
-            <InputNumber
-              defaultValue={size.width}
+            <Input
+              value={selfbox.option.grid.top}
               onChange={(e) => {
-                changeScreen('width', e)
+                changeBox(`${active[0]}-option-grid-top`, e.target.value)
               }}
             />
-            <div className={styles.screenAttr}>宽度</div>
+            <div className={styles.text}>上</div>
           </Form.Item>
           <Form.Item
             style={{
               display: 'inline-block',
               width: 'calc(50% - 8px)',
-              margin: '0 8px',
+              marginRight: '8px',
             }}
           >
-            <InputNumber
-              defaultValue={size.height}
+            <Input
+              value={selfbox.option.grid.bottom}
               onChange={(e) => {
-                changeScreen('height', e)
+                changeBox(`${active[0]}-option-grid-bottom`, e.target.value)
               }}
             />
-            <div className={styles.screenAttr}>高度</div>
+            <div className={styles.text}>下</div>
+          </Form.Item>
+
+          <Form.Item
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 8px)',
+              marginRight: '8px',
+            }}
+          >
+            <Input
+              value={selfbox.option.grid.left}
+              onChange={(e) => {
+                changeBox(`${active[0]}-option-grid-left`, e.target.value)
+              }}
+            />
+            <div className={styles.text}>左</div>
+          </Form.Item>
+          <Form.Item
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 8px)',
+              marginRight: '8px',
+            }}
+          >
+            <Input
+              value={selfbox.option.grid.right}
+              onChange={(e) => {
+                changeBox(`${active[0]}-option-grid-left`, e.target.value)
+              }}
+            />
+            <div className={styles.text}>高</div>
           </Form.Item>
         </Form.Item>
-        <Form.Item label="背景颜色">
-          <div className={styles.colorBody}>
-            <div className={styles.swatch} onClick={handleClick}>
-              <div
-                className={styles.color}
-                style={{
-                  background: `${
-                    typeof selfColor === 'string'
-                      ? selfColor
-                      : `rgba(${selfColor.r}, ${selfColor.g}, ${selfColor.b}, ${selfColor.a})`
-                  }`,
-                }}
-              />
-            </div>
-          </div>
-        </Form.Item>
-        <Form.Item label="背景图">
-          <ImageBox
-            imgData={{
-              url: backgroundImage,
-              opacity: 1,
-            }}
-            upImage={(val) => {
-              changeScreen('bgImg', val)
-            }}
-          />
-        </Form.Item>
       </Form>
-      <div
-        style={{ position: 'absolute', top: top, left: '20px', width: '100%' }}
-      >
-        <div>
-          {displayColorPicker ? (
-            <div className={styles.popover}>
-              <div className={styles.cover} onClick={handleClose} />
-              <SketchPicker color={selfColor} onChange={handleChange} />
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </div>
+    </>
   )
 }
-export default Screen
+
+export default EchartConfig
