@@ -11,7 +11,7 @@
       "@common/*": ["./src/common/*"],
       "@components/*": ["./src/components/*"],
       "@containers/*": ["./src/containers/*"],
-      "@http/*": ["./src/http/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@pages/*": ["./src/pages/*"],
       "@redux/*": ["./src/redux/*"],
       "@mock/*": ["./src/mock/*"],

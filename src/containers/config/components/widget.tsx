@@ -2,15 +2,15 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useMappedState, useDispatch } from 'redux-react-hook'
 import { Form, Input, InputNumber } from 'antd'
 import { Screen } from '@redux/Stores'
-// import PageContext from '@context/index'
+import PageContext from '@context/index'
 import styles from './widget.module.less'
 const mapState = (state: Screen) => ({
   active: state.active,
 })
 const Widget = () => {
   const { active } = useMappedState(mapState)
-  // const { changeBox } = useContext(PageContext)
-  const [box, setBox] = useState({
+  const { box, changeBox } = useContext(PageContext)
+  const [selfbox, setSelfBox] = useState({
     id: '',
     drag: {
       w: 0,
@@ -23,8 +23,9 @@ const Widget = () => {
   })
   const dispatch = useDispatch()
   useEffect(() => {
-    setBox(active[0])
-  }, [active])
+    console.log(active)
+    setSelfBox(box[active[0]])
+  }, [active, box[active[0]]])
   return (
     <>
       <h3>组件</h3>
@@ -39,20 +40,9 @@ const Widget = () => {
             style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
           >
             <InputNumber
-              value={box.drag.w}
+              value={selfbox.drag.w}
               onChange={(e) => {
-                dispatch({
-                  type: 'change_active',
-                  active: [
-                    {
-                      ...box,
-                      drag: {
-                        ...box.drag,
-                        w: e,
-                      },
-                    },
-                  ],
-                })
+                changeBox(`${active[0]}-drag-w`, e)
               }}
             />
             <div className={styles.text}>宽</div>
@@ -65,20 +55,9 @@ const Widget = () => {
             }}
           >
             <InputNumber
-              value={box.drag.h}
+              value={selfbox.drag.h}
               onChange={(e) => {
-                dispatch({
-                  type: 'change_active',
-                  active: [
-                    {
-                      ...box,
-                      drag: {
-                        ...box.drag,
-                        h: e,
-                      },
-                    },
-                  ],
-                })
+                changeBox(`${active[0]}-drag-h`, e)
               }}
             />
             <div className={styles.text}>高</div>
@@ -89,20 +68,10 @@ const Widget = () => {
             style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
           >
             <InputNumber
-              value={box.position.x}
+              value={selfbox.position.x}
               onChange={(e) => {
-                dispatch({
-                  type: 'change_active',
-                  active: [
-                    {
-                      ...box,
-                      position: {
-                        ...box.position,
-                        x: e,
-                      },
-                    },
-                  ],
-                })
+                console.log(e)
+                changeBox(`${active[0]}-position-x`, e)
               }}
             />
             <div className={styles.text}>左</div>
@@ -115,20 +84,9 @@ const Widget = () => {
             }}
           >
             <InputNumber
-              value={box.position.y}
+              value={selfbox.position.y}
               onChange={(e) => {
-                dispatch({
-                  type: 'change_active',
-                  active: [
-                    {
-                      ...box,
-                      position: {
-                        ...box.position,
-                        y: e,
-                      },
-                    },
-                  ],
-                })
+                changeBox(`${active[0]}-position-y`, e)
               }}
             />
             <div className={styles.text}>上</div>

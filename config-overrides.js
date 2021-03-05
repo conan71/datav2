@@ -44,7 +44,7 @@ module.exports = override(
     '@common': path.resolve(__dirname, './src/common'),
     '@components': path.resolve(__dirname, './src/components'),
     '@containers': path.resolve(__dirname, './src/containers'),
-    '@http': path.resolve(__dirname, './src/http'),
+    '@hooks': path.resolve(__dirname, './src/hooks'),
     '@redux': path.resolve(__dirname, './src/redux'),
     '@mock': path.resolve(__dirname, './src/mock'),
     '@routes': path.resolve(__dirname, './src/Routes'),

@@ -11,7 +11,8 @@ import Moveable, { MoveableManagerInterface, Renderer } from 'react-moveable'
 import { useMappedState, useDispatch } from 'redux-react-hook'
 import { Screen } from '@redux/Stores'
 import Widget from '@components/widget'
-import useKeyboardEvent from '@common/moveableKeyEvent'
+import useKeyboardEvent from '@hooks/moveableKeyEvent'
+import useClickAndLongClick from '@hooks/clickOrLongClick'
 import 'react-contexify/dist/ReactContexify.css'
 import styles from '@less/box.module.less'
 interface props {
@@ -156,8 +157,8 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
   const [horizontalGuidelines, setHorizontalGuidelines] = useState<any>()
   const dispatch = useDispatch()
   const moveableRef = useRef<any>(null)
-  const selectoRef = useRef<any>()
-  useKeyboardEvent()
+  useKeyboardEvent(moveableRef, targets)
+  const clickType = useClickAndLongClick(300)
   const frameMap = useMemo(() => {
     return JSON.parse(JSON.stringify(frame))
   }, [frame])
@@ -237,9 +238,11 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     })
     setElementGuidelines(list)
   }, [Object.keys(frameMap).length])
+
   useEffect(() => {
     setFrame(frameMap)
   }, [Object.values(frameMap)])
+
   useEffect(() => {
     let vlines: number[] = [...lines.x],
       hlines: number[] = [...lines.y]
@@ -258,40 +261,33 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
 
   useEffect(() => {
     const active = targets.map((item) => {
-      return frameMap[item.id]
+      return item.id
     })
     dispatch({
       type: 'change_active',
       active: active,
     })
   }, [targets])
+
   useEffect(() => {
-    if (active.length == 1) {
-      moveableRef.current.moveable.request(
-        'resizable',
-        { offsetWidth: active[0].drag.w, offsetHeight: active[0].drag.h },
-        true
-      )
+    const dom = document.getElementById(active[0])
+    if (dom) {
+      moveableRef.current.moveable.updateTarget()
     }
-  }, [active[0]?.drag])
-  useEffect(() => {
-    if (active.length == 1) {
-      moveableRef.current.moveable.request(
-        'draggable',
-        { x: active[0].position.x, y: active[0].position.y },
-        true
-      )
-    }
-  }, [active[0]?.position])
+  }, [frameMap[active[0]]])
+
   const handleOnClick = (e: any) => {
-    const Target = e.target
-    if (Target.id === 'modelList') {
-      if (targets.length > 0) setTargets([])
-    } else {
-      const dom = document.getElementById(Target.dataset.id)
-      setTargets([dom])
+    if (clickType === 'click') {
+      const Target = e.target
+      if (Target.id === 'modelList') {
+        if (targets.length > 0) setTargets([])
+      } else {
+        const dom = document.getElementById(Target.dataset.id)
+        setTargets([dom])
+      }
     }
   }
+
   useImperativeHandle(childRef, () => ({
     // 暴露给父组件的方法
     handleDelete: (e: any) => {
@@ -322,6 +318,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
     setBox(frameMap)
     setTargets([])
   }
+
   const FlatArr = (arr) => {
     while (arr.some((t) => Array.isArray(t))) {
       arr = [].concat.apply([], arr)
@@ -392,7 +389,6 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         onDragEnd={(data) => {
           const { target } = data
           const frame = frameMap[target.id]
-          console.log('drageEnd>>>>>')
           setFrame(`${target.id}-position`, frame.position)
           setModelPosition(false)
           // setModelSize(true)
@@ -420,12 +416,11 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         onResizeEnd={(data) => {
           const { target } = data
           const frame = frameMap[target.id]
-          setModelSize(false)
           setFrame(
             [`${target.id}-position`, `${target.id}-drag`],
             [frame.position, frame.drag]
           )
-
+          setModelSize(false)
           // setModelSize(false)
         }}
         onRotateStart={({ set, target }) => {

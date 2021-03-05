@@ -19,7 +19,7 @@ const Home = ({ history }: any) => {
   const changeBox = (fields, value) => {
     let obj = {}
     let newbox
-    if (!fields || !value) {
+    if (typeof fields === 'undefined' || typeof value === 'undefined') {
       return
     }
     if (typeof fields === 'string' && fields.indexOf('-') === -1) {
@@ -45,6 +45,7 @@ const Home = ({ history }: any) => {
       }
       newbox = update(box, obj)
     }
+    console.log(newbox)
     setBox(newbox)
   }
   const changeScreen = (fields, value) => {
