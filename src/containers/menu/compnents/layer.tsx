@@ -19,11 +19,15 @@ const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? '#0c0e10' : '#0c0e10',
   padding: grid,
   width: '100%',
+  height: '100%',
 })
 const getItemStyle = (isDragging, hover, id, active, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  padding: grid * 2,
+  // padding: grid * 2,
+  height: '52px',
+  lineHeight: '52px',
+  textAlign: 'center',
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
