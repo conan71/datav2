@@ -1,7 +1,17 @@
 {
   "name": "data-view2",
   "version": "0.1.0",
-  "private": true,
+  "description": "datav",
+  "author": "kechen <k13772445714@163.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kechen123/datav2"
+  },
+  "keywords": [
+    "datav",
+    "data-visualization"
+  ],
+  "license": "MIT",
   "dependencies": {
     "@ant-design/aliyun-theme": "^0.0.4",
     "@scena/react-guides": "^0.12.0",
