@@ -1,77 +1,68 @@
-import React, { useState, useRef } from 'react'
-import MoveableBox, { cRef } from '@components/moveable'
-import { Menu, Item, useContextMenu, animation, theme } from 'react-contexify'
-import Selecto from 'react-selecto'
-import Guides from '@scena/react-guides'
-import { useScroll } from 'ahooks'
-import { useMappedState } from 'redux-react-hook'
-import EagleEye from '@components/eagleEye'
-import { Screen } from '@redux/Stores'
-import { Drop } from '@components/drop'
-import styles from '@less/view.module.less'
+import React, { useState, useRef } from 'react';
+import MoveableBox, { cRef } from '@components/moveable';
+import { Menu, Item, useContextMenu, animation, theme } from 'react-contexify';
+import Selecto from 'react-selecto';
+import Guides from '@scena/react-guides';
+import { useScroll } from 'ahooks';
+import { useMappedState } from 'redux-react-hook';
+import EagleEye from '@components/eagleEye';
+import { Screen } from '@redux/Stores';
+import { Drop } from '@components/drop';
+import styles from '@less/view.module.less';
 
 const PAGE_MARGIN = {
   top: 30,
   right: 100,
   bottom: 100,
   left: 30,
-}
-const MENU_ID = 'menu-id'
-const RULER = 25
+};
+const MENU_ID = 'menu-id';
+const RULER = 25;
 const mapState = (state: Screen) => ({
   scale: state.scale,
-})
+});
 interface props {
-  box: Object
-  boxOrder: Array<any>
-  backgroundColor: any | string
-  backgroundImage: string
-  size: any
-  setBoxOrder: Function
-  setBox: Function
-  changeBox: Function
+  box: Object;
+  boxOrder: Array<any>;
+  backgroundColor: any | string;
+  backgroundImage: string;
+  size: any;
+  setBoxOrder: Function;
+  setBox: Function;
+  changeBox: Function;
 }
 const View = (props: props) => {
-  const {
-    box,
-    boxOrder,
-    size,
-    setBox,
-    backgroundColor,
-    backgroundImage,
-    setBoxOrder,
-    changeBox,
-  } = props
+  const { box, boxOrder, size, setBox, backgroundColor, backgroundImage, setBoxOrder, changeBox } = props;
   const [lines, setLines] = useState<any>({
     x: [],
     y: [],
-  })
-  const { scale } = useMappedState(mapState)
-  const view = useRef<HTMLDivElement | null>(null)
-  const childRef = useRef<cRef>(null)
-  const dropBody = useRef<HTMLDivElement | null>(null)
-  const selectoRef = useRef<any>()
-  const scroll = useScroll(view)
+  });
+  const { scale } = useMappedState(mapState);
+  const view = useRef<HTMLDivElement | null>(null);
+  const childRef = useRef<cRef>(null);
+  const dropBody = useRef<HTMLDivElement | null>(null);
+  const selectoRef = useRef<any>();
+  const scroll = useScroll(view);
 
   const handleLock = (e: any) => {
     // console.log(targets)
-  }
+  };
   const { show } = useContextMenu({
     id: MENU_ID,
-  })
+  });
   const displayMenu = (e: any) => {
-    e.persist()
+    e.persist();
     if (e.target && e.target.id != 'modelList') {
-      show(e)
+      show(e);
     } else {
-      e.preventDefault()
+      e.preventDefault();
     }
-  }
+  };
   const handleDelete = (e: any) => {
     if (childRef && childRef.current) {
-      childRef.current.handleDelete(e)
+      childRef.current.handleDelete(e);
     }
-  }
+  };
 
   return (
     <>
@@ -81,8 +72,7 @@ const View = (props: props) => {
           style={{
             transform: `translateX(-${scroll.left}px) scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
-            width:
-              size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
+            width: size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
           }}
         >
           <Guides
@@ -105,7 +95,7 @@ const View = (props: props) => {
             }}
             unit={100}
             onChangeGuides={({ guides }) => {
-              setLines({ x: lines.x, y: guides })
+              setLines({ x: lines.x, y: guides });
             }}
           />
         </div>
@@ -114,8 +104,7 @@ const View = (props: props) => {
           style={{
             transform: `translateY(-${scroll.top}px) scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
-            height:
-              size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
+            height: size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
           }}
         >
           <Guides
@@ -138,7 +127,7 @@ const View = (props: props) => {
             }}
             unit={100}
             onChangeGuides={({ guides }) => {
-              setLines({ y: lines.y, x: guides })
+              setLines({ y: lines.y, x: guides });
             }}
           />
         </div>
@@ -149,10 +138,8 @@ const View = (props: props) => {
           onContextMenu={displayMenu}
           className={styles.scale}
           style={{
-            width:
-              size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
-            height:
-              size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
+            width: size.width + RULER + PAGE_MARGIN.left + PAGE_MARGIN.right + 'px',
+            height: size.height + RULER + PAGE_MARGIN.top + PAGE_MARGIN.bottom + 'px',
             transform: `scale(${scale.x},${scale.y})`,
             transformOrigin: '0 0',
           }}
@@ -168,12 +155,7 @@ const View = (props: props) => {
               width: size.width + 'px',
             }}
           >
-            <Drop
-              frame={box}
-              setFrame={setBox}
-              boxOrder={boxOrder}
-              setBoxOrder={setBoxOrder}
-            >
+            <Drop frame={box} setFrame={setBox} boxOrder={boxOrder} setBoxOrder={setBoxOrder}>
               <MoveableBox
                 ref={childRef}
                 lines={lines}
@@ -190,15 +172,8 @@ const View = (props: props) => {
           </div>
         </div>
       </div>
-      <div className={styles.thumbnail}>
-        {view.current ? <EagleEye frameMap={box} /> : ''}
-      </div>
-      <Menu
-        id={MENU_ID}
-        theme={theme.dark}
-        animation={animation.scale}
-        className={styles.menu}
-      >
+      <div className={styles.thumbnail}>{view.current ? <EagleEye frameMap={box} /> : ''}</div>
+      <Menu id={MENU_ID} theme={theme.dark} animation={animation.scale} className={styles.menu}>
         <Item onClick={handleLock}>锁定</Item>
         <Item onClick={handleDelete}>删除</Item>
       </Menu>
@@ -208,28 +183,29 @@ const View = (props: props) => {
         selectableTargets={['.modelItem']}
         hitRate={30}
         selectByClick={false}
-        selectFromInside={true}
+        selectFromInside={false}
         ratio={0}
         toggleContinueSelect={['shift']}
         onDragStart={(e: any) => {
+          console.log(e);
           if (childRef && childRef.current) {
-            const ismove = childRef.current.isMoveableElement(e)
+            const ismove = childRef.current.isMoveableElement(e);
             if (ismove) {
-              e.stop()
+              e.stop();
             }
           }
         }}
         onSelect={(e: any) => {
           if (e.selected.length === 0) {
-            return
+            return;
           }
           if (childRef && childRef.current) {
-            childRef.current.setTargets(e.selected)
+            childRef.current.setTargets(e.selected);
           }
         }}
       />
       <div className={styles.editSlider}></div>
     </>
-  )
-}
-export default View
+  );
+};
+export default View;

@@ -1,53 +1,53 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useImperativeHandle,
-  forwardRef,
-  ForwardRefRenderFunction,
-} from 'react'
-import Moveable, { MoveableManagerInterface, Renderer } from 'react-moveable'
-import { useMappedState, useDispatch } from 'redux-react-hook'
-import { Screen } from '@redux/Stores'
-import Widget from '@components/widget'
-import useKeyboardEvent from '@hooks/moveableKeyEvent'
-import useClickAndLongClick from '@hooks/clickOrLongClick'
-import 'react-contexify/dist/ReactContexify.css'
-import styles from '@less/box.module.less'
+import React, { useState, useEffect, useRef, useMemo, useImperativeHandle, forwardRef, ForwardRefRenderFunction } from 'react';
+import Moveable, { MoveableManagerInterface, Renderer } from 'react-moveable';
+import { useMappedState, useDispatch } from 'redux-react-hook';
+import { Screen } from '@redux/Stores';
+import Widget from '@components/widget';
+import Plug from '@components/plug';
+import useKeyboardEvent from '@hooks/moveableKeyEvent';
+import 'react-contexify/dist/ReactContexify.css';
+import styles from '@less/box.module.less';
+
+function removeValue(val: any, arr: Array<any>) {
+  var index = arr.indexOf(val);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+}
+
 interface props {
-  frame: Object
-  boxOrder: Array<any>
-  setFrame: Function
-  setBoxOrder: Function
-  setBox: Function
+  frame: Object;
+  boxOrder: Array<any>;
+  setFrame: Function;
+  setBoxOrder: Function;
+  setBox: Function;
   size: {
-    height: number
-    width: number
-  }
+    height: number;
+    width: number;
+  };
   lines: {
-    x: []
-    y: []
-  }
-  backgroundColor: any | string
-  backgroundImage: string
+    x: [];
+    y: [];
+  };
+  backgroundColor: any | string;
+  backgroundImage: string;
 }
 
 export interface cRef {
-  handleDelete: (e: any) => void
-  setTargets: (e: any) => void
-  isMoveableElement: (e: any) => boolean
+  handleDelete: (e: any) => void;
+  setTargets: (e: any) => void;
+  isMoveableElement: (e: any) => boolean;
 }
 const mapState = (state: Screen) => ({
   active: state.active,
-})
+});
 
 const modelPositionBox = {
   name: 'modelPositionName',
   props: {},
   events: {},
   render(moveable: MoveableManagerInterface<any, any>, React: Renderer) {
-    const rect = moveable.getRect()
+    const rect = moveable.getRect();
     return (
       <div
         key={'dimension-viewer'}
@@ -69,15 +69,15 @@ const modelPositionBox = {
       >
         x：{Math.round(rect.left)} y： {Math.round(rect.top)}
       </div>
-    )
+    );
   },
-} as const
+} as const;
 const modelSizeBox = {
   name: 'modelSizeName',
   props: {},
   events: {},
   render(moveable: MoveableManagerInterface<any, any>, React: Renderer) {
-    const rect = moveable.getRect()
+    const rect = moveable.getRect();
     return (
       <div
         key={'dimension-viewer'}
@@ -99,16 +99,16 @@ const modelSizeBox = {
       >
         {Math.round(rect.offsetWidth)} x {Math.round(rect.offsetHeight)}
       </div>
-    )
+    );
   },
-} as const
+} as const;
 
 const modelRotateBox = {
   name: 'modelRotateName',
   props: {},
   events: {},
   render(moveable: MoveableManagerInterface<any, any>, React: Renderer) {
-    const rect = moveable.getRect()
+    const rect = moveable.getRect();
     return (
       <div
         key={'dimension-viewer'}
@@ -130,44 +130,33 @@ const modelRotateBox = {
       >
         {Math.round(rect.rotation)}°
       </div>
-    )
+    );
   },
-} as const
+} as const;
 const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
-  const { active } = useMappedState(mapState)
-  const {
-    frame,
-    size,
-    lines,
-    boxOrder,
-    setBoxOrder,
-    setFrame,
-    setBox,
-    backgroundColor,
-    backgroundImage,
-  } = map
-  const [targets, setTargets] = useState<any>([])
-  const [elementGuidelines, setElementGuidelines] = useState<any>([])
-  const [modelBtn] = useState(true)
-  const [modelSize, setModelSize] = useState(false)
-  const [modelRotate, setModelRotate] = useState(false)
-  const [modelPosition, setModelPosition] = useState(false)
-  const [verticalGuidelines, setVerticalGuidelines] = useState<any>()
-  const [horizontalGuidelines, setHorizontalGuidelines] = useState<any>()
-  const dispatch = useDispatch()
-  const moveableRef = useRef<any>(null)
-  useKeyboardEvent(moveableRef, targets)
-  const clickType = useClickAndLongClick(300)
+  const { active } = useMappedState(mapState);
+  const { frame, size, lines, boxOrder, setBoxOrder, setFrame, setBox, backgroundColor, backgroundImage } = map;
+  const [targets, setTargets] = useState<any>([]);
+  const [elementGuidelines, setElementGuidelines] = useState<any>([]);
+  const [modelBtn] = useState(true);
+  const [modelSize, setModelSize] = useState(false);
+  const [modelRotate, setModelRotate] = useState(false);
+  const [modelPosition, setModelPosition] = useState(false);
+  const [verticalGuidelines, setVerticalGuidelines] = useState<any>();
+  const [horizontalGuidelines, setHorizontalGuidelines] = useState<any>();
+  const dispatch = useDispatch();
+  const moveableRef = useRef<any>(null);
+  useKeyboardEvent(moveableRef, targets);
   const frameMap = useMemo(() => {
-    return JSON.parse(JSON.stringify(frame))
-  }, [frame])
+    return JSON.parse(JSON.stringify(frame));
+  }, [frame]);
   const modelBtnBox = {
     name: 'modelBtnName',
     props: {},
     events: {},
     render(moveable: MoveableManagerInterface<any, any>, React: Renderer) {
-      const rect = moveable.getRect()
-      const { pos2 } = moveable.state
+      const rect = moveable.getRect();
+      const { pos2 } = moveable.state;
       // use css for able
       const EditableViewer = moveable.useCSS(
         'div',
@@ -215,7 +204,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
           cursor: pointer;
         }
         `
-      )
+      );
       // Add key (required)
       // Add class prefix moveable-(required)
       return (
@@ -228,123 +217,123 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         >
           <button className="moveable-button" onClick={handleDelete}></button>
         </EditableViewer>
-      )
+      );
     },
-  } as const
+  } as const;
   useEffect(() => {
     const list = Object.keys(frameMap).map((item) => {
-      return document.getElementById(item)
-    })
-    setElementGuidelines(list)
-  }, [Object.keys(frameMap).length])
+      return document.getElementById(item);
+    });
+    setElementGuidelines(list);
+  }, [Object.keys(frameMap).length]);
 
   useEffect(() => {
-    setFrame(frameMap)
-  }, [frameMap])
+    setFrame(frameMap);
+  }, [frameMap]);
 
   useEffect(() => {
     let vlines: number[] = [...lines.x],
-      hlines: number[] = [...lines.y]
+      hlines: number[] = [...lines.y];
 
     for (let i = 0; i < size.width / 100; i++) {
-      vlines.push(i * 100)
+      vlines.push(i * 100);
     }
-    vlines.push(size.width)
+    vlines.push(size.width);
     for (let i = 0; i < size.height / 100; i++) {
-      hlines.push(i * 100)
+      hlines.push(i * 100);
     }
-    hlines.push(size.height)
-    setVerticalGuidelines(vlines)
-    setHorizontalGuidelines(hlines)
-  }, [size, lines])
+    hlines.push(size.height);
+    setVerticalGuidelines(vlines);
+    setHorizontalGuidelines(hlines);
+  }, [size, lines]);
 
   useEffect(() => {
     const active = targets.map((item) => {
-      return item.id
-    })
+      return item.id;
+    });
     dispatch({
       type: 'change_active',
       active: active,
-    })
-  }, [targets])
+    });
+  }, [targets]);
 
   useEffect(() => {
-    const dom = document.getElementById(active[0])
+    const dom = document.getElementById(active[0]);
     if (dom) {
-      moveableRef.current.moveable.updateTarget()
+      moveableRef.current.moveable.updateTarget();
     }
-  }, [frameMap[active[0]]])
+  }, [frameMap[active[0]]]);
 
   const handleOnClick = (e: any) => {
-    if (clickType === 'click') {
-      const Target = e.target
-      if (Target.id === 'modelList') {
-        if (targets.length > 0) setTargets([])
-      } else {
-        const dom = document.getElementById(Target.dataset.id)
-        setTargets([dom])
-      }
+    e.stopPropagation();
+    const Target = e.currentTarget;
+    const id = Target.id || Target.dataset.id;
+    if (!id || id === '') return;
+    if (id === 'modelList') {
+      if (targets.length > 0) setTargets([]);
+    } else if (id.length > 0) {
+      const dom = document.getElementById(id);
+      setTargets([dom]);
     }
-  }
+  };
 
   useImperativeHandle(childRef, () => ({
     // 暴露给父组件的方法
     handleDelete: (e: any) => {
-      handleDelete(e)
+      handleDelete(e);
     },
     setTargets: (data: any[]) => {
-      setTargets(data)
+      setTargets(data);
     },
     isMoveableElement: (e: any) => {
-      const moveable = moveableRef.current
-      const target = e.inputEvent.target
-      return (
-        moveable.isMoveableElement(target) ||
-        targets.some((t: any) => t === target || t.contains(target))
-      )
+      const moveable = moveableRef.current;
+      const target = e.inputEvent.target;
+      return moveable.isMoveableElement(target) || targets.some((t: any) => t === target || t.contains(target));
     },
-  }))
+  }));
 
   const handleDelete = (e: any) => {
-    let ids: any[] = []
+    let ids: any[] = [];
     targets.forEach((item: any, index: number) => {
-      const id = item.id
-      delete frameMap[id]
-      ids.push(id)
-    })
-    const newBoxOrder = delArr(boxOrder, ids)
-    setBoxOrder(newBoxOrder)
-    setBox(frameMap)
-    setTargets([])
-  }
+      const id = item.id;
+      delete frameMap[id];
+      ids.push(id);
+    });
+    const newBoxOrder = delArr(boxOrder, ids);
+    setBoxOrder(newBoxOrder);
+    setBox(frameMap);
+    setTargets([]);
+  };
 
   const FlatArr = (arr) => {
     while (arr.some((t) => Array.isArray(t))) {
-      arr = [].concat.apply([], arr)
+      arr = [].concat.apply([], arr);
     }
-    return arr
-  }
+    return arr;
+  };
 
   const delArr = (arr: Array<any>, obj) => {
     const delArrItem = (item) => {
       for (let i = 0; i < newArr.length; i++) {
-        const element = newArr[i]
+        const element = newArr[i];
         if (Array.isArray(element)) {
-          element.$removeValue(item)
+          removeValue(item, element);
+          // element.$removeValue(item);
         } else {
-          newArr.$removeValue(item)
+          removeValue(item, newArr);
+          // newArr.$removeValue(item);
         }
       }
-    }
-    let newArr = JSON.parse(JSON.stringify(arr))
+    };
+    let newArr = JSON.parse(JSON.stringify(arr));
     if (obj.length > 1) {
       //成组
-      debugger
+      debugger;
     } else {
-      delArrItem(obj)
+      delArrItem(obj[0]);
     }
-    return newArr
-  }
+    return newArr;
+  };
 
   return (
     <div className={styles.body} id="moveable">
@@ -372,184 +361,172 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         horizontalGuidelines={horizontalGuidelines} //水平方向上添加剪辑辅助线
         elementGuidelines={elementGuidelines}
         onDragStart={(e) => {
-          const id = e.target.id
-          let Transform = frameMap[id]
-          e.set([Transform.position.x, Transform.position.y])
-          setModelPosition(true)
+          const id = e.target.id;
+          let Transform = frameMap[id];
+          e.set([Transform.position.x, Transform.position.y]);
+          setModelPosition(true);
         }}
         onDrag={(data) => {
-          const { target, beforeTranslate } = data
-          const frame = frameMap[target.id]
+          const { target, beforeTranslate } = data;
+          const frame = frameMap[target.id];
           frame.position = {
             x: beforeTranslate[0],
             y: beforeTranslate[1],
-          }
+          };
         }}
         onDragEnd={(data) => {
-          const { target } = data
-          const frame = frameMap[target.id]
-          setFrame(`${target.id}-position`, frame.position)
-          setModelPosition(false)
+          const { target } = data;
+          const frame = frameMap[target.id];
+          setFrame(`${target.id}-position`, frame.position);
+          setModelPosition(false);
           // setModelSize(true)
         }}
         onResizeStart={({ setOrigin, dragStart, target }) => {
-          setOrigin(['%', '%'])
-          const id = target.id
-          let Transform = frameMap[id]
-          dragStart &&
-            dragStart.set([Transform.position.x, Transform.position.y])
-          setModelSize(true)
+          setOrigin(['%', '%']);
+          const id = target.id;
+          let Transform = frameMap[id];
+          dragStart && dragStart.set([Transform.position.x, Transform.position.y]);
+          setModelSize(true);
         }}
         onResize={({ target, width, height, drag }) => {
-          const beforeTranslate = drag.beforeTranslate
-          const frame = frameMap[target.id]
+          const beforeTranslate = drag.beforeTranslate;
+          const frame = frameMap[target.id];
           frame.position = {
             x: beforeTranslate[0],
             y: beforeTranslate[1],
-          }
-          frame.drag = { w: width, h: height }
-          target.style.width = `${width}px`
-          target.style.height = `${height}px`
-          target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
+          };
+          frame.drag = { w: width, h: height };
+          target.style.width = `${width}px`;
+          target.style.height = `${height}px`;
+          target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
         }}
         onResizeEnd={(data) => {
-          const { target } = data
-          const frame = frameMap[target.id]
-          setFrame(
-            [`${target.id}-position`, `${target.id}-drag`],
-            [frame.position, frame.drag]
-          )
-          setModelSize(false)
+          const { target } = data;
+          const frame = frameMap[target.id];
+          setFrame([`${target.id}-position`, `${target.id}-drag`], [frame.position, frame.drag]);
+          setModelSize(false);
           // setModelSize(false)
         }}
         onRotateStart={({ set, target }) => {
-          const frame = frameMap[target.id]
-          set(frame.rotate)
-          setModelRotate(true)
+          const frame = frameMap[target.id];
+          set(frame.rotate);
+          setModelRotate(true);
         }}
         onRotate={(data) => {
-          const frame = frameMap[data.target.id]
-          frame.rotate = data.beforeRotate
+          const frame = frameMap[data.target.id];
+          frame.rotate = data.beforeRotate;
         }}
         onRenderEnd={(data) => {
-          const { target } = data
-          const frame = frameMap[target.id]
-          setFrame(`${target.id}-rotate`, frame.rotate)
-          setModelRotate(false)
+          const { target } = data;
+          const frame = frameMap[target.id];
+          setFrame(`${target.id}-rotate`, frame.rotate);
+          setModelRotate(false);
         }}
         onDragGroupStart={(e) => {
           e.events.forEach((ev) => {
-            const id = ev.target.id
-            let Transform = frameMap[id]
-            ev.set([Transform.position.x, Transform.position.y])
-          })
-          setModelPosition(true)
+            const id = ev.target.id;
+            let Transform = frameMap[id];
+            ev.set([Transform.position.x, Transform.position.y]);
+          });
+          setModelPosition(true);
         }}
         onDragGroup={(e) => {
           e.events.forEach((ev) => {
-            const { target, beforeTranslate } = ev
-            const frame = frameMap[target.id]
+            const { target, beforeTranslate } = ev;
+            const frame = frameMap[target.id];
             frame.position = {
               x: beforeTranslate[0],
               y: beforeTranslate[1],
-            }
-            target.style.transform = `translateX(${frame.position.x}px) translateY(${frame.position.y}px) rotate(${frame.rotate}deg) scaleX(1) scaleY(1)`
-          })
+            };
+            target.style.transform = `translateX(${frame.position.x}px) translateY(${frame.position.y}px) rotate(${frame.rotate}deg) scaleX(1) scaleY(1)`;
+          });
         }}
         onDragGroupEnd={(e) => {
-          setModelPosition(false)
+          setModelPosition(false);
           let fields: any[] = [],
-            vals: any[] = []
+            vals: any[] = [];
           e.targets.forEach((item, inex) => {
-            const frame = frameMap[item.id]
-            fields.push(`${item.id}-position`)
-            vals.push(frame.position)
-          })
+            const frame = frameMap[item.id];
+            fields.push(`${item.id}-position`);
+            vals.push(frame.position);
+          });
 
-          setFrame(fields, vals)
+          setFrame(fields, vals);
         }}
         onResizeGroupStart={(e) => {
           e.events.forEach((ev) => {
-            const id = ev.target.id
-            let Transform = frameMap[id]
-            ev.dragStart &&
-              ev.dragStart.set([Transform.position.x, Transform.position.y])
-          })
-          setModelSize(true)
+            const id = ev.target.id;
+            let Transform = frameMap[id];
+            ev.dragStart && ev.dragStart.set([Transform.position.x, Transform.position.y]);
+          });
+          setModelSize(true);
         }}
         onResizeGroup={(e) => {
           e.events.forEach((ev) => {
-            const { target, width, height, drag } = ev
-            const beforeTranslate = drag.beforeTranslate
-            const frame = frameMap[target.id]
+            const { target, width, height, drag } = ev;
+            const beforeTranslate = drag.beforeTranslate;
+            const frame = frameMap[target.id];
             frame.position = {
               x: beforeTranslate[0],
               y: beforeTranslate[1],
-            }
-            frame.drag = { w: width, h: height }
-            target.style.width = `${width}px`
-            target.style.height = `${height}px`
-            target.style.transform =
-              `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)` +
-              ` rotate(${frame.rotate}deg)`
-          })
+            };
+            frame.drag = { w: width, h: height };
+            target.style.width = `${width}px`;
+            target.style.height = `${height}px`;
+            target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)` + ` rotate(${frame.rotate}deg)`;
+          });
         }}
         onResizeGroupEnd={(e) => {
-          setModelSize(false)
+          setModelSize(false);
 
           let fields: any[] = [],
-            vals: any[] = []
+            vals: any[] = [];
           e.targets.forEach((item, inex) => {
-            const frame = frameMap[item.id]
-            fields.push(`${item.id}-position`)
-            fields.push(`${item.id}-drag`)
-            vals.push(frame.position)
-            vals.push(frame.drag)
-          })
-          setFrame(fields, vals)
+            const frame = frameMap[item.id];
+            fields.push(`${item.id}-position`);
+            fields.push(`${item.id}-drag`);
+            vals.push(frame.position);
+            vals.push(frame.drag);
+          });
+          setFrame(fields, vals);
         }}
         onRotateGroupStart={(e) => {
           e.events.forEach((ev, i) => {
-            const frame = frameMap[ev.target.id]
-            ev.set(frame.rotate)
-            ev.dragStart &&
-              ev.dragStart.set([frame.position.x, frame.position.y])
-          })
-          setModelRotate(true)
+            const frame = frameMap[ev.target.id];
+            ev.set(frame.rotate);
+            ev.dragStart && ev.dragStart.set([frame.position.x, frame.position.y]);
+          });
+          setModelRotate(true);
         }}
         onRotateGroup={(e) => {
           e.events.forEach((ev, i) => {
-            const beforeTranslate = ev.drag.beforeTranslate
-            const frame = frameMap[ev.target.id]
+            const beforeTranslate = ev.drag.beforeTranslate;
+            const frame = frameMap[ev.target.id];
             frame.position = {
               x: beforeTranslate[0],
               y: beforeTranslate[1],
-            }
-            frame.rotate = ev.rotate
-            ev.target.style.transform =
-              `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)` +
-              ` rotate(${ev.rotate}deg)`
-          })
+            };
+            frame.rotate = ev.rotate;
+            ev.target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)` + ` rotate(${ev.rotate}deg)`;
+          });
         }}
         onRotateGroupEnd={(e) => {
-          setModelRotate(false)
+          setModelRotate(false);
 
           let fields: any[] = [],
-            vals: any[] = []
+            vals: any[] = [];
           e.targets.forEach((item, inex) => {
-            const frame = frameMap[item.id]
-            fields.push(`${item.id}-position`)
-            fields.push(`${item.id}-rotate`)
-            vals.push(frame.position)
-            vals.push(frame.rotate)
-          })
-          setFrame(fields, vals)
+            const frame = frameMap[item.id];
+            fields.push(`${item.id}-position`);
+            fields.push(`${item.id}-rotate`);
+            vals.push(frame.position);
+            vals.push(frame.rotate);
+          });
+          setFrame(fields, vals);
         }}
         onRender={({ target }) => {
-          const { position, rotate } = frameMap[target.id]
-          target.style.transform =
-            `translate(${position.x}px, ${position.y}px)` +
-            ` rotate(${rotate}deg)`
+          const { position, rotate } = frameMap[target.id];
+          target.style.transform = `translate(${position.x}px, ${position.y}px)` + ` rotate(${rotate}deg)`;
         }}
       />
 
@@ -558,9 +535,7 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundColor: `${
-            typeof backgroundColor === 'string'
-              ? backgroundColor
-              : `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, ${backgroundColor.a})`
+            typeof backgroundColor === 'string' ? backgroundColor : `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, ${backgroundColor.a})`
           }`,
 
           backgroundSize: 'auto 100%',
@@ -572,14 +547,15 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
         {
           // Object.values(frameMap).map((item: any, index) => {
           FlatArr(boxOrder).map((o: any, index) => {
-            const item = frameMap[o]
+            const item = frameMap[o];
             return (
               <div
+                onClick={handleOnClick}
                 key={item.id}
                 id={item.id}
                 className={`${styles.model} ${
                   targets.find((target) => {
-                    return target.id === item.id
+                    return target.id === item.id;
                   }) !== undefined
                     ? styles.select
                     : ''
@@ -590,23 +566,24 @@ const MoveableBox: ForwardRefRenderFunction<cRef, props> = (map, childRef) => {
                   transform: `translate(${item.position.x}px, ${item.position.y}px) rotate( ${item.rotate}deg )`,
                 }}
               >
-                <Widget
+                <Plug url="./echart" name="echart" />
+                {/* <Widget
                   id={item.id}
                   active={
                     targets.find((target) => {
-                      return target.id === item.id
+                      return target.id === item.id;
                     }) !== undefined
                       ? true
                       : false
                   }
-                />
+                /> */}
               </div>
-            )
+            );
           })
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default forwardRef(MoveableBox)
+export default forwardRef(MoveableBox);
